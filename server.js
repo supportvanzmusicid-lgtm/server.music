@@ -4,7 +4,7 @@ const cloudinary = require('cloudinary').v2;
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Konfigurasi Cloudinary Master Admin
+// Konfigurasi Master Admin Cloudinary
 cloudinary.config({ 
   cloud_name: 'd8cvicyr', 
   api_key: '852345123713169', 
@@ -21,20 +21,26 @@ app.get('/api/songs', async (req, res) => {
     try {
         const rawSearch = req.query.search || '';
 
-        // Mengambil data dari Cloudinary dengan aman (fokus ke resource_type video/raw)
+        // Mengambil file dari Cloudinary
         const result = await cloudinary.api.resources({
             type: 'upload',
             resource_type: 'video',
             max_results: 100
         });
 
+        // Format data lagu + URL Audio + URL Cover Album
         let songsList = result.resources.map((file, index) => {
             const cleanName = file.public_id.split('/').pop();
+            
+            // Generate link cover otomatis dari Cloudinary (mengubah format audio jadi jpg/png)
+            const coverUrl = file.secure_url.replace(/\.[^/.]+$/, ".jpg");
+
             return {
                 id: index + 1,
                 filename: cleanName,
-                title: cleanName.replace(/[-_]/g, ' '), // Judul lagu rapi tanpa _ dan -
-                url: file.secure_url,                  // Link audio untuk streaming/download di Android
+                title: cleanName.replace(/[-_]/g, ' '),
+                url: file.secure_url,     // Link streaming audio MP3
+                cover_url: coverUrl,      // Link gambar cover/thumbnail
                 format: file.format || 'mp3',
                 created_at: file.created_at
             };
@@ -56,11 +62,12 @@ app.get('/api/songs', async (req, res) => {
         });
 
     } catch (error) {
-        console.error("Error Detail:", error);
+        console.error("Cloudinary Error:", error);
+        // Menampilkan pesan error lengkap ke browser jika terjadi masalah
         res.status(500).json({ 
             success: false, 
-            message: "Gagal mengambil data dari Cloudinary",
-            error: error.message 
+            error_message: error.message || "Terjadi kesalahan internal pada server",
+            detail: error
         });
     }
 });
