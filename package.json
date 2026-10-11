@@ -2,12 +2,7 @@
   "name": "server-music",
   "version": "1.0.0",
   "description": "Vanz Music Backend",
-  "main": "index.js",
-  "scripts": {
-    "start": "node songs.js"
-  },
   "dependencies": {
-    "cloudinary": "^1.41.3",
-    "express": "^4.19.2"
+    "cloudinary": "^1.41.3"
   }
 }
