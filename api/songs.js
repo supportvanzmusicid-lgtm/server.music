@@ -7,47 +7,52 @@ module.exports = async (req, res) => {
   }
 
   try {
-    const cloudName = 'd8cvicyr';
-    const apiKey = '652472984813877';
-    const apiSecret = 'P385PKmWGyhswdwml0Z3teLHRyY';
+    const collectionUrl = 'https://collection.cloudinary.com/d8cvicyr/03fec99ea384fd67b1bc6f177a427cd0';
+    
+    // Ambil HTML dari halaman koleksi publik
+    const response = await fetch(collectionUrl);
+    const htmlText = await response.text();
 
-    const auth = Buffer.from(`${apiKey}:${apiSecret}`).toString('base64');
+    // Cari pola URL asset audio/video dari Cloudinary yang ada di halaman
+    const mediaRegex = /https:\/\/res\.cloudinary\.com\/d8cvicyr\/[^\s"'<>]+/g;
+    const matches = htmlText.match(mediaRegex) || [];
 
-    const response = await fetch(`https://api.cloudinary.com/v1_1/${cloudName}/resources/video/upload?max_results=100`, {
-      method: 'GET',
-      headers: {
-        'Authorization': `Basic ${auth}`
-      }
+    // Filter link unik dan ambil yang berupa file media
+    const uniqueUrls = [...new Set(matches)];
+    
+    const songs = uniqueUrls.map((url, index) => {
+      const fileName = url.split('/').pop().split('?')[0];
+      const cleanTitle = decodeURIComponent(fileName)
+        .replace(/\.[^/.]+$/, "")
+        .replace(/_/g, ' ')
+        .replace(/-/g, ' ');
+
+      return {
+        id: `song_${index + 1}`,
+        title: cleanTitle || `Lagu ${index + 1}`,
+        url: url,
+        format: "mp3"
+      };
     });
 
-    const data = await response.json();
+    const { search } = req.query;
+    let filteredSongs = songs;
 
-    if (!response.ok) {
-      return res.status(500).json({
-        success: false,
-        message: "Ditolak Cloudinary",
-        details: data
-      });
+    if (search) {
+      const keyword = search.toLowerCase();
+      filteredSongs = songs.filter(s => s.title.toLowerCase().includes(keyword));
     }
-
-    const songs = data.resources.map((file) => ({
-      id: file.public_id,
-      title: file.public_id.split('/').pop().replace(/_/g, ' '),
-      url: file.secure_url,
-      format: file.format,
-      created_at: file.created_at
-    }));
 
     return res.status(200).json({
       success: true,
-      total: songs.length,
-      data: songs
+      total: filteredSongs.length,
+      data: filteredSongs
     });
 
   } catch (error) {
     return res.status(500).json({
       success: false,
-      message: "Gagal total",
+      message: "Gagal mengambil data dari koleksi",
       error_detail: error.message
     });
   }
