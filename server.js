@@ -4,7 +4,7 @@ const cloudinary = require('cloudinary').v2;
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Konfigurasi Master Admin
+// Konfigurasi Master Admin Cloudinary
 cloudinary.config({ 
   cloud_name: 'd8cvicyr', 
   api_key: '852345123713169', 
@@ -13,7 +13,7 @@ cloudinary.config({
 
 // Endpoint Utama
 app.get('/', (req, res) => {
-    res.json({ status: "Server Vanz Music Online!" });
+    res.status(200).json({ status: "Server Vanz Music Online!" });
 });
 
 // Endpoint API Lagu & Pencarian
@@ -21,7 +21,7 @@ app.get('/api/songs', async (req, res) => {
     try {
         const rawSearch = req.query.search || '';
 
-        // Mengambil data dari Cloudinary
+        // Request ke Cloudinary Admin API
         const result = await cloudinary.api.resources({
             type: 'upload',
             resource_type: 'video',
@@ -30,6 +30,7 @@ app.get('/api/songs', async (req, res) => {
 
         let songsList = result.resources.map((file, index) => {
             const cleanName = file.public_id.split('/').pop();
+            // Trik cover URL sederhana dari Cloudinary
             const coverUrl = file.secure_url.replace(/\.[^/.]+$/, ".jpg");
 
             return {
@@ -43,7 +44,7 @@ app.get('/api/songs', async (req, res) => {
             };
         });
 
-        // Filter Pencarian
+        // Filter Pencarian Fleksibel
         if (rawSearch.trim() !== '') {
             const cleanQuery = rawSearch.toLowerCase().replace(/[-_]/g, ' ');
             songsList = songsList.filter(song => {
@@ -52,21 +53,26 @@ app.get('/api/songs', async (req, res) => {
             });
         }
 
-        res.json({
+        return res.status(200).json({
             success: true,
             total: songsList.length,
             songs: songsList
         });
 
     } catch (error) {
-        // Menampilkan pesan error asli dari Cloudinary ke browser
-        res.status(500).json({ 
+        // Menampilkan pesan error asli agar terbaca jelas di browser
+        return res.status(200).json({ 
             success: false, 
-            error_code: error.http_code || 500,
-            message: error.message || "Unknown Error",
-            details: error
+            debug_info: "Terjadi error saat memanggil Cloudinary",
+            error_message: error.message || "Unknown error",
+            error_details: JSON.parse(JSON.stringify(error, Object.getOwnPropertyNames(error)))
         });
     }
+});
+
+// Handling 404 Route
+app.use((req, res) => {
+    res.status(404).json({ success: false, message: "Endpoint tidak ditemukan" });
 });
 
 app.listen(PORT, () => {
