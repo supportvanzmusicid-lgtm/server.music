@@ -16,16 +16,16 @@ app.get('/', (req, res) => {
     res.json({ status: "Server Vanz Music Online!" });
 });
 
-// Endpoint API Lagu & Pencarian
+// Endpoint API Lagu & Pencarian (Menggunakan resource_type 'auto' agar semua mp3 terbaca)
 app.get('/api/songs', async (req, res) => {
     try {
         const rawSearch = req.query.search || '';
 
-        // Mengambil seluruh file media (audio/video) dari Cloudinary
+        // Mengambil seluruh file dari Cloudinary tanpa batasan folder & tipe
         const result = await cloudinary.api.resources({
             type: 'upload',
-            resource_type: 'video', // Di Cloudinary MP3 terdeteksi sebagai 'video'
-            max_results: 500        // Menampilkan hingga 500 file
+            resource_type: 'auto', 
+            max_results: 500
         });
 
         // Pembersihan & Pemetaan Data
@@ -34,7 +34,7 @@ app.get('/api/songs', async (req, res) => {
             return {
                 id: index + 1,
                 filename: cleanName,
-                title: cleanName.replace(/[-_]/g, ' '), // Menghapus _ dan - agar judul rapi
+                title: cleanName.replace(/[-_]/g, ' '), // Merapikan judul (menghapus - dan _)
                 url: file.secure_url,
                 format: file.format,
                 created_at: file.created_at
@@ -43,7 +43,6 @@ app.get('/api/songs', async (req, res) => {
 
         // Fitur Pencarian Fleksibel
         if (rawSearch.trim() !== '') {
-            // Mengubah input pencarian dan nama file jadi huruf kecil & membersihkan simbol
             const cleanQuery = rawSearch.toLowerCase().replace(/[-_]/g, ' ');
 
             songsList = songsList.filter(song => {
