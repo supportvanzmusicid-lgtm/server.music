@@ -1,0 +1,13 @@
+{
+  "name": "backend-musik",
+  "version": "1.0.0",
+  "description": "Backend API Cloudinary untuk Aplikasi Musik Android",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "cloudinary": "^1.41.3",
+    "express": "^4.19.2"
+  }
+}
