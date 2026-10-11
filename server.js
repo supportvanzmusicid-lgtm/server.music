@@ -4,33 +4,74 @@ const cloudinary = require('cloudinary').v2;
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+// Konfigurasi Cloudinary Master Admin
 cloudinary.config({ 
   cloud_name: 'd8cvicyr', 
   api_key: '852345123713169', 
   api_secret: 'DkwnDDPNErZuqrPpQAm1CVhDZEs' 
 });
 
+// Endpoint Utama
 app.get('/', (req, res) => {
-    res.json({ status: "Server Online!" });
+    res.json({ status: "Server Vanz Music Online!" });
 });
 
+// Endpoint API Lagu & Pencarian
 app.get('/api/songs', async (req, res) => {
     try {
-        // Tes ping langsung ke Cloudinary
-        const result = await cloudinary.api.ping();
-        
+        const rawSearch = req.query.search || '';
+
+        // Mengambil file dari Cloudinary (menggunakan tipe video/audio)
+        const result = await cloudinary.api.resources({
+            type: 'upload',
+            resource_type: 'video',
+            max_results: 100
+        });
+
+        // Format data lagu + URL Audio + URL Cover Album Otomatis
+        let songsList = result.resources.map((file, index) => {
+            const cleanName = file.public_id.split('/').pop();
+            
+            // Generate link cover otomatis dari file audio Cloudinary (diubah ke format jpg)
+            const coverUrl = file.secure_url.replace(/\.[^/.]+$/, ".jpg");
+
+            return {
+                id: index + 1,
+                filename: cleanName,
+                title: cleanName.replace(/[-_]/g, ' '), // Menghapus _ dan - agar judul bersih
+                url: file.secure_url,                   // Link streaming audio (.mp3)
+                cover_url: coverUrl,                    // Link cover album/thumbnail
+                format: file.format || 'mp3',
+                created_at: file.created_at
+            };
+        });
+
+        // Fitur Pencarian Fleksibel
+        if (rawSearch.trim() !== '') {
+            const cleanQuery = rawSearch.toLowerCase().replace(/[-_]/g, ' ');
+            songsList = songsList.filter(song => {
+                const targetName = song.filename.toLowerCase().replace(/[-_]/g, ' ');
+                return targetName.includes(cleanQuery);
+            });
+        }
+
         res.json({
             success: true,
-            message: "Koneksi ke Cloudinary Berhasil!",
-            ping: result
+            total: songsList.length,
+            songs: songsList
         });
+
     } catch (error) {
+        console.error("Cloudinary Error:", error);
         res.status(500).json({ 
             success: false, 
-            error_message: error.message 
+            error_message: error.message || "Terjadi kesalahan internal pada server"
         });
     }
 });
 
-app.listen(PORT, () => {});
+app.listen(PORT, () => {
+    console.log(`Server berjalan di port ${PORT}`);
+});
+
 module.exports = app;
