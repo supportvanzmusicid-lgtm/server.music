@@ -11,37 +11,48 @@ cloudinary.config({
   api_secret: 'PUJC1TvtBF-iA7j0nQS9PzYorh8' 
 });
 
-// Endpoint Utama
+// Endpoint Utama (Cek Status Server)
 app.get('/', (req, res) => {
     res.json({ status: "Server Vanz Music Online!" });
 });
 
-// Endpoint API Lagu & Pencarian (Menggunakan resource_type 'auto' agar semua mp3 terbaca)
+// Endpoint API Lagu & Pencarian Lengkap
 app.get('/api/songs', async (req, res) => {
     try {
         const rawSearch = req.query.search || '';
 
-        // Mengambil seluruh file dari Cloudinary tanpa batasan folder & tipe
-        const result = await cloudinary.api.resources({
+        // 1. Ambil file dari tipe 'video' (kategori audio/video standar Cloudinary)
+        const videoRes = await cloudinary.api.resources({
             type: 'upload',
-            resource_type: 'auto', 
+            resource_type: 'video',
             max_results: 500
-        });
+        }).catch(() => ({ resources: [] }));
 
-        // Pembersihan & Pemetaan Data
-        let songsList = result.resources.map((file, index) => {
+        // 2. Ambil file dari tipe 'raw' (kategori mentah MP3 Cloudinary)
+        const rawRes = await cloudinary.api.resources({
+            type: 'upload',
+            resource_type: 'raw',
+            max_results: 500
+        }).catch(() => ({ resources: [] }));
+
+        // Gabungkan hasil dari kedua kategori
+        const allResources = [...videoRes.resources, ...rawRes.resources];
+
+        // Format & Petakan Data Lagu
+        let songsList = allResources.map((file, index) => {
             const cleanName = file.public_id.split('/').pop();
             return {
                 id: index + 1,
                 filename: cleanName,
-                title: cleanName.replace(/[-_]/g, ' '), // Merapikan judul (menghapus - dan _)
+                title: cleanName.replace(/[-_]/g, ' '), // Rapikan tanda - dan _ jadi spasi
                 url: file.secure_url,
-                format: file.format,
+                format: file.format || 'mp3',
+                resource_type: file.resource_type,
                 created_at: file.created_at
             };
         });
 
-        // Fitur Pencarian Fleksibel
+        // Fitur Pencarian Jika Parameter `search` Diisi
         if (rawSearch.trim() !== '') {
             const cleanQuery = rawSearch.toLowerCase().replace(/[-_]/g, ' ');
 
