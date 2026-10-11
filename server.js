@@ -7,7 +7,7 @@ cloudinary.config({
   api_secret: 'DkwnDDPNErZuqrPpQAm1CVhDZEs' 
 });
 
-export default async function handler(req, res) {
+module.exports = async (req, res) => {
     // Mengizinkan CORS
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Methods', 'GET');
@@ -54,10 +54,11 @@ export default async function handler(req, res) {
         });
 
     } catch (error) {
-        return res.status(500).json({ 
+        // Jika masih error, sekarang error aslinya bakal kelihatan di browser!
+        return res.status(200).json({ 
             success: false, 
-            message: "Gagal mengambil data dari Cloudinary",
-            error_detail: error.message 
+            error_message: error.message || "Terjadi kesalahan pada server",
+            stack: error.stack
         });
     }
-}
+};
