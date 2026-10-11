@@ -8,7 +8,7 @@ module.exports = async (req, res) => {
 
   const cloudName = 'd8cvicyr';
 
-  // Daftar 36 lagu dari koleksi Cloudinary yang sudah dibersihkan otomatis
+  // Total 50 lagu lengkap dari koleksi Cloudinary Vanz Music
   const rawList = [
     { title: "Aku Jatuh Cinta", artist: "Raden Rakha Basmalah", file: "Aku_Jatuh_Cinta_-_Raden_Rakha_Basmalah_-_APLMate.com" },
     { title: "Aku Jatuh Cinta (Alt)", artist: "Raden Rakha Basmalah", file: "Aku_Jatuh_Cinta_-_Raden_Rakha_Basmalah_-_APLMate.com_1" },
@@ -45,7 +45,21 @@ module.exports = async (req, res) => {
     { title: "Sambalado", artist: "Ayu Ting Ting", file: "Sambalado_-_Ayu_Ting_Ting_-_APLMate.com" },
     { title: "Sampai Menutup Mata", artist: "Vanz Music", file: "Sampai_Menutup_Mata" },
     { title: "Sampai Menutup Mata", artist: "Raden Rakha", file: "Sampai_Menutup_Mata_-_Raden_Rakha_-_APLMate.com" },
-    { title: "Sandiwara Cinta", artist: "Nike Ardilla", file: "Sandiwara_Cinta_-_Nike_Ardilla_-_APLMate.com" }
+    { title: "Sandiwara Cinta", artist: "Nike Ardilla", file: "Sandiwara_Cinta_-_Nike_Ardilla_-_APLMate.com" },
+    { title: "Seberkas Sinar", artist: "Nike Ardilla", file: "Seberkas_Sinar_-_Nike_Ardilla_-_APLMate.com" },
+    { title: "Sesi Potret", artist: "eńau & Ari Lesmana", file: "Sesi_Potret_-_e%C5%84au_Ari_Lesmana_-_APLMate.com" },
+    { title: "Siapkah Kau Tuk Jatuh Cinta Lagi", artist: "HIVI!", file: "Siapkah_Kau_Tuk_Jatuh_Cinta_Lagi_-_HIVI_-_APLMate.com" },
+    { title: "Siapkah Kau Tuk Jatuh Cinta Lagi (Copy)", artist: "HIVI!", file: "Siapkah_Kau_Tuk_Jatuh_Cinta_Lagi_-_HIVI_-_APLMate.com_-_Copy" },
+    { title: "Tanpa Cinta", artist: "Yovie Widianto & Tiara Andini", file: "Tanpa_Cinta_-_Yovie_Widianto_Tiara_Andini_-_APLMate.com" },
+    { title: "Tanpa Cinta (Copy)", artist: "Yovie Widianto & Tiara Andini", file: "Tanpa_Cinta_-_Yovie_Widianto_Tiara_Andini_-_APLMate.com_-_Copy" },
+    { title: "That Should Be Me", artist: "Justin Bieber", file: "That_Should_Be_Me_-_Justin_Bieber_-_APLMate.com" },
+    { title: "Untuk Apalagi", artist: "Nike Ardilla", file: "Untuk_Apalagi_-_Nike_Ardilla_-_APLMate.com" },
+    { title: "Yank", artist: "Wali", file: "Yank_-_Wali_-_APLMate.com" },
+    { title: "Yank (Alt)", artist: "Wali", file: "Yank_-_Wali_-_APLMate.com_1" },
+    { title: "Bergema Sampai Selamanya", artist: "Nadhif Basalamah", file: "bergema_sampai_selamanya_-_Nadhif_Basalamah_-_APLMate.com" },
+    { title: "Kota Ini Tak Sama Tanpamu", artist: "Nadhif Basalamah", file: "kota_ini_tak_sama_tanpamu_-_Nadhif_Basalamah_-_APLMate.com" },
+    { title: "Tiba Tiba Jumat Lagi", artist: "Nadhif Basalamah", file: "tiba-tiba_jumat_lagi_-_Nadhif_Basalamah_-_APLMate.com" },
+    { title: "Tulis Terapi", artist: "Nadhif Basalamah", file: "tulis_terapi_-_Nadhif_Basalamah_-_APLMate.com" }
   ];
 
   // Format ke output JSON standar aplikasi Vanz Music
