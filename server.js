@@ -1,32 +1,15 @@
 const express = require('express');
-const cors = require('cors');
+const cloudinary = require('cloudinary').v2;
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-app.use(cors());
-
-// Daftar lagu (karena pakai role Media Library User, kita daftarkan list lagu dan link publik Cloudinary di sini)
-const mySongs = [
-    {
-        id: 1,
-        filename: "Pudar_-_Rossa_-_APLMate.com.mp3",
-        title: "Pudar Rossa",
-        // Masukkan link publik / secure_url asli dari file Cloudinary kamu di sini
-        url: "https://res.cloudinary.com/d8cvicyr/video/upload/v12345678/Pudar_-_Rossa_-_APLMate.com.mp3", 
-        format: "mp3"
-    },
-    // Tambahkan lagu-lagu lainnya di sini dengan format yang sama:
-    /*
-    {
-        id: 2,
-        filename: "Nama_File_Lagu_Lain.mp3",
-        title: "Judul Lagu Lain",
-        url: "LINK_CLOUDINARY_LAGU_TERSEBUT",
-        format: "mp3"
-    }
-    */
-];
+// Konfigurasi Cloudinary dengan API Key Master Admin yang baru
+cloudinary.config({ 
+  cloud_name: 'd8cvicyr', 
+  api_key: '852345123713169', 
+  api_secret: 'DkwnDDPNErZuqrPpQAm1CVhDZEs' 
+});
 
 // Endpoint Utama
 app.get('/', (req, res) => {
@@ -34,19 +17,36 @@ app.get('/', (req, res) => {
 });
 
 // Endpoint API Lagu & Pencarian
-app.get('/api/songs', (req, res) => {
+app.get('/api/songs', async (req, res) => {
     try {
         const rawSearch = req.query.search || '';
-        let songsList = [...mySongs];
+
+        // Mengambil file dari kategori video dan raw secara paralel menggunakan Admin API
+        const [videoRes, rawRes] = await Promise.all([
+            cloudinary.api.resources({ type: 'upload', resource_type: 'video', max_results: 500 }).catch(() => ({ resources: [] })),
+            cloudinary.api.resources({ type: 'upload', resource_type: 'raw', max_results: 500 }).catch(() => ({ resources: [] }))
+        ]);
+
+        const allResources = [...videoRes.resources, ...rawRes.resources];
+
+        let songsList = allResources.map((file, index) => {
+            const cleanName = file.public_id.split('/').pop();
+            return {
+                id: index + 1,
+                filename: cleanName,
+                title: cleanName.replace(/[-_]/g, ' '), // Merapikan tanda - dan _ jadi spasi
+                url: file.secure_url,
+                format: file.format || 'mp3',
+                created_at: file.created_at
+            };
+        });
 
         // Fitur Pencarian Fleksibel
         if (rawSearch.trim() !== '') {
             const cleanQuery = rawSearch.toLowerCase().replace(/[-_]/g, ' ');
-
             songsList = songsList.filter(song => {
                 const targetName = song.filename.toLowerCase().replace(/[-_]/g, ' ');
-                const targetTitle = song.title.toLowerCase();
-                return targetName.includes(cleanQuery) || targetTitle.includes(cleanQuery);
+                return targetName.includes(cleanQuery);
             });
         }
 
@@ -60,7 +60,7 @@ app.get('/api/songs', (req, res) => {
         console.error(error);
         res.status(500).json({ 
             success: false, 
-            message: "Gagal memuat daftar lagu",
+            message: "Gagal mengambil data dari Cloudinary",
             error: error.message 
         });
     }
