@@ -62,7 +62,7 @@ module.exports = async (req, res) => {
         });
 
     } catch (error) {
-        // Menangkap error Cloudinary secara transparan
+        // Menangkap error Cloudinary secara transparan jika ada kendala
         return res.status(200).json({ 
             success: false, 
             message: "Terjadi kesalahan saat menghubungkan ke Cloudinary",
