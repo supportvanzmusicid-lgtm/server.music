@@ -1,9 +1,9 @@
 const cloudinary = require('cloudinary').v2;
 
 cloudinary.config({
-  cloud_name: 'd8cvicyr',
-  api_key: '645289879813673',
-  api_secret: 'Qt94SSMtWWmSflkSFEj1qjS_pbl'
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET
 });
 
 module.exports = async (req, res) => {
@@ -15,16 +15,13 @@ module.exports = async (req, res) => {
   }
 
   try {
-    const { search } = req.query;
-
-    // Mengambil daftar file audio/video menggunakan Admin API yang valid
     const result = await cloudinary.api.resources({
       resource_type: 'video',
       type: 'upload',
       max_results: 100
     });
 
-    let songs = result.resources.map((file) => ({
+    const songs = result.resources.map((file) => ({
       id: file.public_id,
       title: file.public_id.split('/').pop().replace(/_/g, ' '),
       url: file.secure_url,
@@ -32,24 +29,8 @@ module.exports = async (req, res) => {
       created_at: file.created_at
     }));
 
-    if (search) {
-      const keyword = search.toLowerCase();
-      songs = songs.filter((song) =>
-        song.title.toLowerCase().includes(keyword)
-      );
-    }
-
-    return res.status(200).json({
-      success: true,
-      total: songs.length,
-      data: songs
-    });
+    return res.status(200).json({ success: true, total: songs.length, data: songs });
   } catch (error) {
-    return res.status(500).json({
-      success: false,
-      message: "Gagal konek Cloudinary",
-      error_detail: error.message || JSON.stringify(error),
-      http_code: error.http_code || 500
-    });
+    return res.status(500).json({ success: false, error_detail: error.message || error });
   }
 };
