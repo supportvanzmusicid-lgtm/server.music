@@ -1,8 +1,4 @@
-const express = require('express');
 const cloudinary = require('cloudinary').v2;
-
-const app = express();
-const PORT = process.env.PORT || 3000;
 
 // Konfigurasi Master Admin Cloudinary
 cloudinary.config({ 
@@ -11,17 +7,15 @@ cloudinary.config({
   api_secret: 'DkwnDDPNErZuqrPpQAm1CVhDZEs' 
 });
 
-// Endpoint Utama
-app.get('/', (req, res) => {
-    res.status(200).json({ status: "Server Vanz Music Online!" });
-});
+export default async function handler(req, res) {
+    // Mengizinkan CORS
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Methods', 'GET');
 
-// Endpoint API Lagu & Pencarian
-app.get('/api/songs', async (req, res) => {
     try {
         const rawSearch = req.query.search || '';
 
-        // Request ke Cloudinary Admin API
+        // Mengambil data dari Cloudinary
         const result = await cloudinary.api.resources({
             type: 'upload',
             resource_type: 'video',
@@ -30,21 +24,21 @@ app.get('/api/songs', async (req, res) => {
 
         let songsList = result.resources.map((file, index) => {
             const cleanName = file.public_id.split('/').pop();
-            // Trik cover URL sederhana dari Cloudinary
+            // Link otomatis untuk cover art/thumbnail album dari file audio
             const coverUrl = file.secure_url.replace(/\.[^/.]+$/, ".jpg");
 
             return {
                 id: index + 1,
                 filename: cleanName,
                 title: cleanName.replace(/[-_]/g, ' '),
-                url: file.secure_url,
-                cover_url: coverUrl,
+                url: file.secure_url,       // Link audio MP3
+                cover_url: coverUrl,        // Link gambar cover
                 format: file.format || 'mp3',
                 created_at: file.created_at
             };
         });
 
-        // Filter Pencarian Fleksibel
+        // Fitur Pencarian Fleksibel
         if (rawSearch.trim() !== '') {
             const cleanQuery = rawSearch.toLowerCase().replace(/[-_]/g, ' ');
             songsList = songsList.filter(song => {
@@ -60,23 +54,10 @@ app.get('/api/songs', async (req, res) => {
         });
 
     } catch (error) {
-        // Menampilkan pesan error asli agar terbaca jelas di browser
-        return res.status(200).json({ 
+        return res.status(500).json({ 
             success: false, 
-            debug_info: "Terjadi error saat memanggil Cloudinary",
-            error_message: error.message || "Unknown error",
-            error_details: JSON.parse(JSON.stringify(error, Object.getOwnPropertyNames(error)))
+            message: "Gagal mengambil data dari Cloudinary",
+            error_detail: error.message 
         });
     }
-});
-
-// Handling 404 Route
-app.use((req, res) => {
-    res.status(404).json({ success: false, message: "Endpoint tidak ditemukan" });
-});
-
-app.listen(PORT, () => {
-    console.log(`Server berjalan di port ${PORT}`);
-});
-
-module.exports = app;
+}
