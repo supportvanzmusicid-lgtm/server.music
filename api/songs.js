@@ -8,10 +8,9 @@ module.exports = async (req, res) => {
 
   try {
     const cloudName = 'd8cvicyr';
-    const apiKey = '645289879813673';
-    const apiSecret = 'Qt94SSMtWWmSflkSFEj1qjS_pbl';
+    const apiKey = '652472984813877';
+    const apiSecret = 'P385PKmWGyhswdwml0Z3teLHRyY';
 
-    // Membuat Basic Auth token base64 untuk HTTP Request langsung ke Cloudinary
     const auth = Buffer.from(`${apiKey}:${apiSecret}`).toString('base64');
 
     const response = await fetch(`https://api.cloudinary.com/v1_1/${cloudName}/resources/video/upload?max_results=100`, {
