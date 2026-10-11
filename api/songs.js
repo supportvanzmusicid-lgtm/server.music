@@ -17,9 +17,9 @@ module.exports = async (req, res) => {
   try {
     const { search } = req.query;
 
-    // Ubah resource_type menjadi 'auto' agar bisa membaca semua jenis file (audio/raw/video)
+    // Mengambil daftar file audio/video menggunakan Admin API yang valid
     const result = await cloudinary.api.resources({
-      resource_type: 'auto',
+      resource_type: 'video',
       type: 'upload',
       max_results: 100
     });
