@@ -8,9 +8,99 @@ module.exports = async (req, res) => {
 
   const cloudName = 'd8cvicyr';
 
-  // Total 189 Lagu Gabungan dari 4 Koleksi Cloudinary Vanz Music
+  // Total 275+ Lagu Gabungan Seluruh Koleksi Cloudinary Vanz Music
   const rawList = [
-    // --- BATCH 1 (51 Assets) ---
+    // --- BATCH BARU 1 (50 Assets) ---
+    { title: "Hatiku Bagai Disangkar Emas", artist: "Nike Ardilla / Pop Nostalgia", file: "1._Hatiku_Bagai_Disangkar_Emas" },
+    { title: "Kekasihku", artist: "Nike Ardilla / Pop Nostalgia", file: "10._Kekasihku" },
+    { title: "Tiada Dusta Dihatiku", artist: "Nike Ardilla / Pop Nostalgia", file: "11._Tiada_Dusta_Dihatiku" },
+    { title: "Hati Yang Rindu", artist: "Nike Ardilla / Pop Nostalgia", file: "12._Hati_Yang_Rindu" },
+    { title: "Cintailah Aku", artist: "Nike Ardilla / Pop Nostalgia", file: "13._Cintailah_Aku" },
+    { title: "Bersamamu", artist: "Nike Ardilla / Pop Nostalgia", file: "14._Bersamamu" },
+    { title: "Sendiri Lagi", artist: "Nike Ardilla / Pop Nostalgia", file: "15._Sendiri_Lagi" },
+    { title: "Bilakah", artist: "Nike Ardilla / Pop Nostalgia", file: "16._Bilakah" },
+    { title: "Cukup Sudah", artist: "Glenn Fredly", file: "17._Cukup_Sudah" },
+    { title: "Aku Cinta Kamu", artist: "Doel Sumbang / Pop Nostalgia", file: "18._Aku_Cinta_Kamu" },
+    { title: "Mungkinkah", artist: "Stinky", file: "19._Mungkinkah" },
+    { title: "Cinta Semusim", artist: "Pop Nostalgia", file: "2._Cinta_Semusim" },
+    { title: "Di Sisi Jurang Cinta", artist: "Pop Nostalgia", file: "20._Di_Sisi_Jurang_Cinta" },
+    { title: "Hatiku Bagai Terpenjara", artist: "Nike Ardilla", file: "22._Hatiku_Bagai_Terpenjara" },
+    { title: "Bagai Lilin Kecil", artist: "Nike Ardilla", file: "23._Bagai_Lilin_Kecil" },
+    { title: "Bandung Menangis Lagi", artist: "Poppy Mercury / Nike Ardilla", file: "24._Bandung_Menangis_Lagi" },
+    { title: "Deru Debu", artist: "Nike Ardilla", file: "25._Deru_Debu" },
+    { title: "Cinta Yang Hilang", artist: "Pop Nostalgia", file: "26._Cinta_Yang_Hilang" },
+    { title: "Tanpa Dirimu", artist: "Pop Nostalgia", file: "27._Tanpa_Dirimu" },
+    { title: "Jurang Pemisah", artist: "Pop Nostalgia", file: "28._Jurang_Pemisah" },
+    { title: "Biarkan Orang Bicara", artist: "Rita Effendy", file: "29._Biarkan_Orang_Bicara" },
+    { title: "Hari Hariku", artist: "Pop Nostalgia", file: "30._Hari_Hariku" },
+    { title: "Cintamu Untuk Siapa", artist: "Pop Nostalgia", file: "31._Cintamu_Untuk_Siapa" },
+    { title: "Api Cinta", artist: "Pop Nostalgia", file: "32._Api_Cinta" },
+    { title: "Sepenggal Dusta", artist: "Pop Nostalgia", file: "33._Sepenggal_Dusta" },
+    { title: "Relakan Dia Pergi", artist: "Pop Nostalgia", file: "34._Relakan_Dia_Pergi" },
+    { title: "Dekap Erat", artist: "Pop Nostalgia", file: "35._Dekap_Erat" },
+    { title: "Yang Tersayang", artist: "Pop Nostalgia", file: "36._Yang_Tersayang" },
+    { title: "Gita Cinta", artist: "Pop Nostalgia", file: "37._Gita_Cinta" },
+    { title: "Sepenggal Dusta (Alt)", artist: "Pop Nostalgia", file: "38._Sepenggal_Dusta" },
+    { title: "Yang Ku Tahu", artist: "Pop Nostalgia", file: "39._Yang_Ku_Tahu" },
+    { title: "Bunga Kasih Yang Merana", artist: "Pop Nostalgia", file: "4._Bunga_Kasih_Yang_Merana" },
+    { title: "Temani Aku Malam Ini", artist: "Pop Nostalgia", file: "40._Temani_Aku_Malam_Ini" },
+    { title: "Lebih Baik Putus", artist: "Pop Nostalgia", file: "41._Lebih_Baik_Putus" },
+    { title: "Aiaia", artist: "Pop Nostalgia", file: "42._Aiaia" },
+    { title: "Ingin Kembali Ke Masa Lalu", artist: "Pop Nostalgia", file: "43._Ingin_Kembali_Ke_Masa_Lalu" },
+    { title: "Cinta", artist: "Vina Panduwinata / Melly Goeslaw", file: "44._Cinta" },
+    { title: "Kasmaran", artist: "Jaz", file: "45._Kasmaran" },
+    { title: "Niat Suci", artist: "Pop Nostalgia", file: "46._Niat_Suci" },
+    { title: "Relaku Di Pelukmu", artist: "Pop Nostalgia", file: "47._Relaku_Di_Pelukmu" },
+    { title: "Tak Terbatas", artist: "Pop Nostalgia", file: "48._Tak_Terbatas" },
+    { title: "Jujur Saja", artist: "Pop Nostalgia", file: "49._Jujur_Saja" },
+    { title: "Ku Ingin Jumpa", artist: "Pop Nostalgia", file: "5._Ku_Ingin_Jumpa" },
+    { title: "Kembali Padaku", artist: "Pop Nostalgia", file: "51._Kembali_Padaku" },
+    { title: "Kembalikan", artist: "Pop Nostalgia", file: "52._Kembalikan" },
+    { title: "Ku Ingin Bebas", artist: "Pop Nostalgia", file: "53._Ku_Ingin_Bebas" },
+    { title: "Yang Mengharapkan", artist: "Pop Nostalgia", file: "6._Yang_Mengharapkan" },
+    { title: "10 Tahun Lebih Dewasa", artist: "Pop Nostalgia", file: "7._10_Tahun_Lebih_Dewasa" },
+    { title: "Tergores Cinta Palsu", artist: "Pop Nostalgia", file: "8._Tergores_Cinta_Palsu" },
+    { title: "Masih Ada Rasa Cinta", artist: "Pop Nostalgia", file: "9._Masih_Ada_Rasa_Cinta" },
+
+    // --- BATCH BARU 2 (36 Assets) ---
+    { title: "Kekasih", artist: "Pop Nostalgia", file: "50._Kekasih" },
+    { title: "Lelah", artist: "Pop Nostalgia", file: "54._Lelah" },
+    { title: "Tak Ingin Berpisah", artist: "Raza / Pop Nostalgia", file: "55._Tak_Ingin_Berpisah" },
+    { title: "Tak Mungkin Kutinggalkan", artist: "Pop Nostalgia", file: "56._Tak_Mungkin_Kutinggalkan" },
+    { title: "Bicara Cinta", artist: "Pop Nostalgia", file: "57._Bicara_Cinta" },
+    { title: "Tak Bisa", artist: "Pop Nostalgia", file: "58._Tak_Bisa" },
+    { title: "Berlari", artist: "Pop Nostalgia", file: "59._Berlari" },
+    { title: "Aku Bukan Untukmu", artist: "Rossa", file: "60._Aku_Bukan_Untukmu" },
+    { title: "Setia Menanti", artist: "Pop Nostalgia", file: "61._Setia_Menanti" },
+    { title: "Berartinya Dirimu", artist: "Pop Nostalgia", file: "62._Berartinya_Dirimu" },
+    { title: "Tak Kembali", artist: "Pop Nostalgia", file: "63._Tak_Kembali" },
+    { title: "Saatnya Aku", artist: "Pop Nostalgia", file: "64._Saatnya_Aku" },
+    { title: "Bukan Untuk Kita", artist: "Pop Nostalgia", file: "65._Bukan_Untuk_Kita" },
+    { title: "Selamanya", artist: "Pop Nostalgia", file: "66._Selamanya" },
+    { title: "Ku Tahu", artist: "Pop Nostalgia", file: "67._Ku_Tahu" },
+    { title: "Persimpangan Jalan", artist: "Pop Nostalgia", file: "68._Persimpangan_Jalan" },
+    { title: "Cinta Abadi", artist: "Pop Nostalgia", file: "69._Cinta_Abadi" },
+    { title: "Baby Aku Rindu", artist: "Pop Nostalgia", file: "70._Baby_Aku_Rindu" },
+    { title: "Ulangi", artist: "Pop Nostalgia", file: "71._Ulangi" },
+    { title: "Memori", artist: "Pop Nostalgia", file: "72._Memori" },
+    { title: "Yah Sudah", artist: "Pop Nostalgia", file: "73._Yah_Sudah" },
+    { title: "Lelaki Sejati", artist: "Pop Nostalgia", file: "74._Lelaki_Sejati" },
+    { title: "Ku Tak Sempurna", artist: "Pop Nostalgia", file: "75._Ku_Tak_Sempurna" },
+    { title: "Jangan Pikir Kau Paling Seksi", artist: "Pop Nostalgia", file: "76._Jangan_Pikir_Kau_Paling_Seksi" },
+    { title: "Pertama Kujatuh Cinta", artist: "Pop Nostalgia", file: "77._Pertama_Kujatuh_Cinta" },
+    { title: "Cintaku Bukan Hiasan", artist: "Pop Nostalgia", file: "78._Cintaku_Bukan_Hiasan" },
+    { title: "Hatiku Bagai Terpenjara (Alt)", artist: "Nike Ardilla", file: "79._Hatiku_Bagai_Terpenjara" },
+    { title: "Hati Tergores Cinta", artist: "Nike Ardilla ft. Nafa Urbach", file: "80._Hati_Tergores_Cinta_feat._Nafa_Urbach" },
+    { title: "Kekasihku (Alt)", artist: "Pop Nostalgia", file: "81._Kekasihku" },
+    { title: "Kusadari", artist: "Pop Nostalgia", file: "82._Kusadari" },
+    { title: "Biarkan Orang Bicara (Alt)", artist: "Rita Effendy", file: "83._Biarkan_Orang_Bicara" },
+    { title: "Jurang Pemisah (Alt)", artist: "Pop Nostalgia", file: "84._Jurang_Pemisah" },
+    { title: "Deru Debu (Alt)", artist: "Nike Ardilla", file: "85._Deru_Debu" },
+    { title: "Hari Hariku (Alt)", artist: "Pop Nostalgia", file: "86._Hari_Hariku" },
+    { title: "Cintamu Untuk Siapa (Alt)", artist: "Pop Nostalgia", file: "87._Cintamu_Untuk_Siapa" },
+    { title: "Melepasmu Kelemahanku", artist: "Pop Nostalgia", file: "88._Melepasmu_Kelemahanku" },
+
+    // --- BATCH KOLEKSI SEBELUMNYA (189 Assets) ---
     { title: "Pokoke Joget", artist: "Vanz Collection", file: "1._Pokoke_Joget" },
     { title: "Serana", artist: "For Revenge", file: "1._Serana" },
     { title: "Pacar Lima Langkah", artist: "Ice Trisnawati", file: "10._Pacar_Lima_Langkah" },
@@ -62,8 +152,6 @@ module.exports = async (req, res) => {
     { title: "Cinta Satu Malam", artist: "Melinda", file: "9._Cinta_Satu_Malam" },
     { title: "Disarankan di Bandung", artist: "Vanz Collection", file: "9._Disarankan_di_Bandung" },
     { title: "Sempurna", artist: "Andra and The BackBone", file: "91._Sempurna" },
-
-    // --- BATCH 2 (65 Assets) ---
     { title: "Jakarta Hari Ini", artist: "For Revenge ft. Stereo Wall", file: "10._Jakarta_Hari_Ini" },
     { title: "Rumah Ke Rumah", artist: "Hindia", file: "13._Rumah_Ke_Rumah" },
     { title: "Cincin", artist: "Hindia", file: "14._Cincin" },
@@ -129,8 +217,6 @@ module.exports = async (req, res) => {
     { title: "Foto Kita Blur", artist: "Vanz Collection", file: "76._Foto_kita_blur" },
     { title: "Garam Madu Sakit Dadaku", artist: "Vanz Collection", file: "78._Garam_Madu_Sakit_Dadaku" },
     { title: "Satu Bulan", artist: "Bernadya", file: "98._Satu_Bulan" },
-
-    // --- BATCH 3 (38 Assets) ---
     { title: "Pelangi", artist: "HiVi!", file: "100._Pelangi" },
     { title: "Penjaga Hati (Alt)", artist: "Nadhif Basalamah", file: "75._penjaga_hati" },
     { title: "Mejikuhibiniu", artist: "Vanz Collection", file: "77._mejikuhibiniu" },
@@ -169,8 +255,6 @@ module.exports = async (req, res) => {
     { title: "Yank (Alt)", artist: "Wali", file: "Yank_-_Wali_-_APLMate.com_1" },
     { title: "Tiba Tiba Jumat Lagi", artist: "Nadhif Basalamah", file: "tiba-tiba_jumat_lagi_-_Nadhif_Basalamah_-_APLMate.com" },
     { title: "Tulis Terapi", artist: "Nadhif Basalamah", file: "tulis_terapi_-_Nadhif_Basalamah_-_APLMate.com" },
-
-    // --- BATCH 4 (35 Assets) ---
     { title: "Aku Jatuh Cinta", artist: "Raden Rakha Basmalah", file: "Aku_Jatuh_Cinta_-_Raden_Rakha_Basmalah_-_APLMate.com" },
     { title: "Aku Jatuh Cinta (Alt)", artist: "Raden Rakha Basmalah", file: "Aku_Jatuh_Cinta_-_Raden_Rakha_Basmalah_-_APLMate.com_1" },
     { title: "Aku Yang Jatuh Cinta", artist: "Dudy Oris", file: "Aku_Yang_Jatuh_Cinta_-_Dudy_Oris_-_APLMate.com" },
@@ -213,12 +297,11 @@ module.exports = async (req, res) => {
     id: `song_${index + 1}`,
     title: item.title,
     artist: item.artist,
-    album: item.artist, // Menjaga ketersediaan field album agar tidak crash di Android
+    album: item.artist,
     url: `https://res.cloudinary.com/${cloudName}/video/upload/${item.file}.mp3`,
     format: "mp3"
   }));
 
-  // Logika pencarian dan rekomendasi
   const { search, artist } = req.query;
   let filteredSongs = songs;
 
