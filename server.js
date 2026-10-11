@@ -8,14 +8,14 @@ cloudinary.config({
 });
 
 module.exports = async (req, res) => {
-    // Mengizinkan CORS
+    // Setting CORS
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Methods', 'GET');
 
     try {
         const rawSearch = req.query.search || '';
 
-        // Mengambil data dari Cloudinary
+        // Ambil data file media dari Cloudinary
         const result = await cloudinary.api.resources({
             type: 'upload',
             resource_type: 'video',
@@ -24,15 +24,16 @@ module.exports = async (req, res) => {
 
         let songsList = result.resources.map((file, index) => {
             const cleanName = file.public_id.split('/').pop();
-            // Link otomatis untuk cover art/thumbnail album dari file audio
+            
+            // Trik Cloudinary: Mengubah file audio MP3 jadi thumbnail gambar (.jpg)
             const coverUrl = file.secure_url.replace(/\.[^/.]+$/, ".jpg");
 
             return {
                 id: index + 1,
                 filename: cleanName,
-                title: cleanName.replace(/[-_]/g, ' '),
-                url: file.secure_url,       // Link audio MP3
-                cover_url: coverUrl,        // Link gambar cover
+                title: cleanName.replace(/[-_]/g, ' '), // Menghapus _ dan - agar rapi
+                url: file.secure_url,                   // Link Audio MP3
+                cover_url: coverUrl,                    // Link Gambar Cover Album
                 format: file.format || 'mp3',
                 created_at: file.created_at
             };
@@ -54,11 +55,11 @@ module.exports = async (req, res) => {
         });
 
     } catch (error) {
-        // Jika masih error, sekarang error aslinya bakal kelihatan di browser!
+        // Tampilkan error transparan jika terjadi kendala pada Cloudinary
         return res.status(200).json({ 
             success: false, 
-            error_message: error.message || "Terjadi kesalahan pada server",
-            stack: error.stack
+            message: "Gagal memproses data Cloudinary",
+            error_detail: error.message || error
         });
     }
 };
