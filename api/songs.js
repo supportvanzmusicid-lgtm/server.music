@@ -1,6 +1,5 @@
 const cloudinary = require('cloudinary').v2;
 
-// Konfigurasi Master Admin Cloudinary
 cloudinary.config({ 
   cloud_name: 'd8cvicyr', 
   api_key: '852345123713169', 
@@ -8,14 +7,12 @@ cloudinary.config({
 });
 
 module.exports = async (req, res) => {
-    // Setting CORS
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Methods', 'GET');
 
     try {
         const rawSearch = req.query.search || '';
 
-        // Ambil data file media dari Cloudinary
         const result = await cloudinary.api.resources({
             type: 'upload',
             resource_type: 'video',
@@ -24,22 +21,19 @@ module.exports = async (req, res) => {
 
         let songsList = result.resources.map((file, index) => {
             const cleanName = file.public_id.split('/').pop();
-            
-            // Trik Cloudinary: Mengubah file audio MP3 jadi thumbnail gambar (.jpg) otomatis
             const coverUrl = file.secure_url.replace(/\.[^/.]+$/, ".jpg");
 
             return {
                 id: index + 1,
                 filename: cleanName,
-                title: cleanName.replace(/[-_]/g, ' '), // Menghapus _ dan - agar judul rapi
-                url: file.secure_url,                   // Link Audio MP3
-                cover_url: coverUrl,                    // Link Gambar Cover Album
+                title: cleanName.replace(/[-_]/g, ' '),
+                url: file.secure_url,
+                cover_url: coverUrl,
                 format: file.format || 'mp3',
                 created_at: file.created_at
             };
         });
 
-        // Fitur Pencarian Fleksibel
         if (rawSearch.trim() !== '') {
             const cleanQuery = rawSearch.toLowerCase().replace(/[-_]/g, ' ');
             songsList = songsList.filter(song => {
