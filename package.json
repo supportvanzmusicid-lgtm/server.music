@@ -4,7 +4,7 @@
   "description": "Vanz Music Backend",
   "main": "index.js",
   "scripts": {
-    "start": "node server.js"
+    "start": "node songs.js"
   },
   "dependencies": {
     "cloudinary": "^1.41.3",
