@@ -24,11 +24,11 @@ module.exports = async (req, res) => {
         });
 
     } catch (error) {
-        // Ini bakal menampilkan pesan error asli Vercel/Cloudinary langsung di layar
+        // Ini akan menampilkan alasan kenapa Cloudinary menolak koneksinya langsung di layar
         return res.status(200).json({
             success: false,
             error_message: error.message,
-            error_stack: error.stack
+            error_http_code: error.http_code
         });
     }
 };
