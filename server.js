@@ -4,7 +4,7 @@ const cloudinary = require('cloudinary').v2;
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Konfigurasi Cloudinary Master Admin
+// Konfigurasi Master Admin
 cloudinary.config({ 
   cloud_name: 'd8cvicyr', 
   api_key: '852345123713169', 
@@ -21,32 +21,29 @@ app.get('/api/songs', async (req, res) => {
     try {
         const rawSearch = req.query.search || '';
 
-        // Mengambil file dari Cloudinary (menggunakan tipe video/audio)
+        // Mengambil data dari Cloudinary
         const result = await cloudinary.api.resources({
             type: 'upload',
             resource_type: 'video',
             max_results: 100
         });
 
-        // Format data lagu + URL Audio + URL Cover Album Otomatis
         let songsList = result.resources.map((file, index) => {
             const cleanName = file.public_id.split('/').pop();
-            
-            // Generate link cover otomatis dari file audio Cloudinary (diubah ke format jpg)
             const coverUrl = file.secure_url.replace(/\.[^/.]+$/, ".jpg");
 
             return {
                 id: index + 1,
                 filename: cleanName,
-                title: cleanName.replace(/[-_]/g, ' '), // Menghapus _ dan - agar judul bersih
-                url: file.secure_url,                   // Link streaming audio (.mp3)
-                cover_url: coverUrl,                    // Link cover album/thumbnail
+                title: cleanName.replace(/[-_]/g, ' '),
+                url: file.secure_url,
+                cover_url: coverUrl,
                 format: file.format || 'mp3',
                 created_at: file.created_at
             };
         });
 
-        // Fitur Pencarian Fleksibel
+        // Filter Pencarian
         if (rawSearch.trim() !== '') {
             const cleanQuery = rawSearch.toLowerCase().replace(/[-_]/g, ' ');
             songsList = songsList.filter(song => {
@@ -62,10 +59,12 @@ app.get('/api/songs', async (req, res) => {
         });
 
     } catch (error) {
-        console.error("Cloudinary Error:", error);
+        // Menampilkan pesan error asli dari Cloudinary ke browser
         res.status(500).json({ 
             success: false, 
-            error_message: error.message || "Terjadi kesalahan internal pada server"
+            error_code: error.http_code || 500,
+            message: error.message || "Unknown Error",
+            details: error
         });
     }
 });
