@@ -1,8 +1,0 @@
-{
-  "rewrites": [
-    {
-      "source": "/api/songs",
-      "destination": "/api/songs.js"
-    }
-  ]
-}
