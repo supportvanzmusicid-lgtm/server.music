@@ -8,7 +8,7 @@ module.exports = async (req, res) => {
 
   const cloudName = 'd8cvicyr';
 
-  // Total 50 lagu lengkap dari koleksi Cloudinary Vanz Music
+  // Daftar 50 lagu lengkap
   const rawList = [
     { title: "Aku Jatuh Cinta", artist: "Raden Rakha Basmalah", file: "Aku_Jatuh_Cinta_-_Raden_Rakha_Basmalah_-_APLMate.com" },
     { title: "Aku Jatuh Cinta (Alt)", artist: "Raden Rakha Basmalah", file: "Aku_Jatuh_Cinta_-_Raden_Rakha_Basmalah_-_APLMate.com_1" },
@@ -62,7 +62,6 @@ module.exports = async (req, res) => {
     { title: "Tulis Terapi", artist: "Nadhif Basalamah", file: "tulis_terapi_-_Nadhif_Basalamah_-_APLMate.com" }
   ];
 
-  // Format ke output JSON standar aplikasi Vanz Music
   const songs = rawList.map((item, index) => ({
     id: `song_${index + 1}`,
     title: item.title,
@@ -71,16 +70,21 @@ module.exports = async (req, res) => {
     format: "mp3"
   }));
 
-  // Fitur Pencarian (Search Query)
-  const { search } = req.query;
+  const { search, artist } = req.query;
   let filteredSongs = songs;
 
+  // Fitur pencarian utama
   if (search) {
     const keyword = search.toLowerCase();
     filteredSongs = songs.filter(s => 
       s.title.toLowerCase().includes(keyword) || 
       s.artist.toLowerCase().includes(keyword)
     );
+  }
+
+  // Fitur Rekomendasi berdasarkan Artis yang sama (atau lagu acak jika parameter artist diisi)
+  if (artist) {
+    filteredSongs = songs.filter(s => s.artist.toLowerCase().includes(artist.toLowerCase()));
   }
 
   return res.status(200).json({
