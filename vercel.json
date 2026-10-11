@@ -1,6 +1,8 @@
 {
-  "version": 2,
-  "builds": [
-    { "src": "api/songs.js", "use": "@vercel/node" }
+  "rewrites": [
+    {
+      "source": "/api/songs",
+      "destination": "/api/songs.js"
+    }
   ]
 }
