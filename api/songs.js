@@ -11,48 +11,24 @@ module.exports = async (req, res) => {
     res.setHeader('Access-Control-Allow-Methods', 'GET');
 
     try {
-        const rawSearch = req.query.search || '';
-
         const result = await cloudinary.api.resources({
             type: 'upload',
             resource_type: 'video',
-            max_results: 100
+            max_results: 10
         });
-
-        let songsList = result.resources.map((file, index) => {
-            const cleanName = file.public_id.split('/').pop();
-            const coverUrl = file.secure_url.replace(/\.[^/.]+$/, ".jpg");
-
-            return {
-                id: index + 1,
-                filename: cleanName,
-                title: cleanName.replace(/[-_]/g, ' '),
-                url: file.secure_url,
-                cover_url: coverUrl,
-                format: file.format || 'mp3',
-                created_at: file.created_at
-            };
-        });
-
-        if (rawSearch.trim() !== '') {
-            const cleanQuery = rawSearch.toLowerCase().replace(/[-_]/g, ' ');
-            songsList = songsList.filter(song => {
-                const targetName = song.filename.toLowerCase().replace(/[-_]/g, ' ');
-                return targetName.includes(cleanQuery);
-            });
-        }
 
         return res.status(200).json({
             success: true,
-            total: songsList.length,
-            songs: songsList
+            total: result.resources.length,
+            data: result.resources
         });
 
     } catch (error) {
-        return res.status(500).json({ 
-            success: false, 
-            message: "Gagal memproses data Cloudinary",
-            error_detail: error.message 
+        // Ini bakal menampilkan pesan error asli Vercel/Cloudinary langsung di layar
+        return res.status(200).json({
+            success: false,
+            error_message: error.message,
+            error_stack: error.stack
         });
     }
 };
