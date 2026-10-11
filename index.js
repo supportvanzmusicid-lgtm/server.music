@@ -1,6 +1,7 @@
 module.exports = (req, res) => {
   res.status(200).json({
-    message: "Server Music API is running!",
+    status: "online",
+    message: "API Server Music Vanz Siap Digunakan!",
     endpoint: "/api/songs"
   });
 };
