@@ -1,9 +1,9 @@
 const cloudinary = require('cloudinary').v2;
 
 cloudinary.config({
-  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
-  api_key: process.env.CLOUDINARY_API_KEY,
-  api_secret: process.env.CLOUDINARY_API_SECRET
+  cloud_name: 'd8cvicyr',
+  api_key: '645289879813673',
+  api_secret: 'Qt94SSMtWWmSflkSFEj1qjS_pbl'
 });
 
 module.exports = async (req, res) => {
@@ -29,8 +29,17 @@ module.exports = async (req, res) => {
       created_at: file.created_at
     }));
 
-    return res.status(200).json({ success: true, total: songs.length, data: songs });
+    return res.status(200).json({
+      success: true,
+      total: songs.length,
+      data: songs
+    });
   } catch (error) {
-    return res.status(500).json({ success: false, error_detail: error.message || error });
+    return res.status(500).json({
+      success: false,
+      message: "Gagal konek Cloudinary",
+      error_detail: error.message || JSON.stringify(error),
+      http_code: error.http_code || 500
+    });
   }
 };
