@@ -44,7 +44,6 @@ module.exports = async (req, res) => {
       data: songs
     });
   } catch (error) {
-    // Kita ubah agar menampilkan detail error asli dari Cloudinary secara lengkap
     return res.status(500).json({
       success: false,
       message: "Gagal konek Cloudinary",
