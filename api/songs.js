@@ -7,31 +7,23 @@ module.exports = async (req, res) => {
   }
 
   try {
-    const collectionUrl = 'https://collection.cloudinary.com/d8cvicyr/03fec99ea384fd67b1bc6f177a427cd0';
-    
-    // Ambil HTML dari halaman koleksi publik
-    const response = await fetch(collectionUrl);
-    const htmlText = await response.text();
+    // Memanggil endpoint JSON publik resmi Cloudinary untuk akun d8cvicyr
+    const response = await fetch('https://res.cloudinary.com/d8cvicyr/video/list/upload.json');
+    const data = await response.json();
 
-    // Cari pola URL asset audio/video dari Cloudinary yang ada di halaman
-    const mediaRegex = /https:\/\/res\.cloudinary\.com\/d8cvicyr\/[^\s"'<>]+/g;
-    const matches = htmlText.match(mediaRegex) || [];
-
-    // Filter link unik dan ambil yang berupa file media
-    const uniqueUrls = [...new Set(matches)];
-    
-    const songs = uniqueUrls.map((url, index) => {
-      const fileName = url.split('/').pop().split('?')[0];
+    const songs = (data.resources || []).map((file, index) => {
+      const publicId = file.public_id;
+      const fileName = publicId.split('/').pop();
       const cleanTitle = decodeURIComponent(fileName)
-        .replace(/\.[^/.]+$/, "")
         .replace(/_/g, ' ')
         .replace(/-/g, ' ');
 
       return {
-        id: `song_${index + 1}`,
+        id: publicId,
         title: cleanTitle || `Lagu ${index + 1}`,
-        url: url,
-        format: "mp3"
+        url: `https://res.cloudinary.com/d8cvicyr/video/upload/${publicId}.${file.format}`,
+        format: file.format,
+        created_at: file.created_at
       };
     });
 
@@ -52,7 +44,7 @@ module.exports = async (req, res) => {
   } catch (error) {
     return res.status(500).json({
       success: false,
-      message: "Gagal mengambil data dari koleksi",
+      message: "Gagal mengambil daftar lagu",
       error_detail: error.message
     });
   }
