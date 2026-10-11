@@ -1,7 +1,6 @@
 {
   "name": "server-music",
   "version": "1.0.0",
-  "description": "Vanz Music Backend",
   "dependencies": {
     "cloudinary": "^1.41.3"
   }
