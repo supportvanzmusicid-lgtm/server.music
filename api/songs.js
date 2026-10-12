@@ -247,7 +247,7 @@ module.exports = async (req, res) => {
     // --- KUMPULAN LAGU SEBELUMNYA (Koleksi Utama Vanz) ---
     { title: "Pencinta Wanita", artist: "Irwansyah", file: "1._Pencinta_Wanita" },
     { title: "Menjaga Hati", artist: "Yovie & Nuno", file: "11._Menjaga_Hati" },
-    { title: "Suara (Ku Berharap)", artist: "ST12", file: "12._Suara_Ku_Berharap" },
+    { title: "Suara (Ku Berharap)", artist: "Hijau Daun", file: "12._Suara_Ku_Berharap" },
     { title: "Sandiwara Cinta", artist: "Repvblik", file: "13._Sandiwara_Cinta" },
     { title: "Cinta Ini Membunuhku", artist: "d'Masiv", file: "14._Cinta_Ini_Membunuhku" },
     { title: "Yank", artist: "Wali", file: "15._Yank" },
