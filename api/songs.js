@@ -9,7 +9,7 @@ module.exports = async (req, res) => {
   try {
     const cloudName = 'd8cvicyr';
     
-    // Semua daftar lagu digabung langsung dalam satu file ini
+    // Daftar lagu persis sesuai dengan data yang kamu berikan
     const rawList = [
       { title: "Get You", artist: "Daniel Caesar ft. Kali Uchis", file: "301._Get_You" },
       { title: "Always", artist: "Daniel Caesar", file: "302._Always" },
