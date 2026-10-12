@@ -180,7 +180,7 @@ module.exports = async (req, res) => {
     { title: "Dramatic XViltration", artist: "Vanz Collection", file: "18._Dramatic_XViltration" },
     { title: "Teh Hijau", artist: "Vanz Collection", file: "19._Teh_Hijau" },
     { title: "Februari", artist: "Glenn Fredly", file: "2._Februari" },
-    { title: "Menepi (Cover)", artist: "Ngatmombilung", file: "2._Menepi_-_Cover" },
+    { title: "Menepi ", artist: "Ngatmombilung", file: "2._Menepi_-_Cover" },
     { title: "Sesi Potret", artist: "eńau & Ari Lesmana", file: "20._Sesi_Potret" },
     { title: "Ku Bahagia", artist: "Melly Goeslaw", file: "21._Ku_Bahagia" },
     { title: "Suara Hati Seorang Kekasih", artist: "Melly Goeslaw", file: "22._Suara_Hati_Seorang_Kekasih" },
@@ -349,7 +349,7 @@ module.exports = async (req, res) => {
     { title: "Pecinta Wanita", artist: "Irwansyah", file: "Pecinta_Wanita_-_Irwansyah_-_APLMate.com" },
     { title: "Pudar (New Version)", artist: "Rossa", file: "Pudar_New_Version_-_Rossa_-_APLMate.com" },
     { title: "Sambalado  ", artist: "Ayu Ting Ting", file: "Sambalado_-_Ayu_Ting_Ting_-_APLMate.com" },
-    { title: "Sampai Menutup Mata (Cover)", artist: "Raden Rakha", file: "Sampai_Menutup_Mata_-_Raden_Rakha_-_APLMate.com" },
+    { title: "Sampai Menutup Mata ", artist: "Raden Rakha", file: "Sampai_Menutup_Mata_-_Raden_Rakha_-_APLMate.com" },
     { title: "Bergema Sampai Selamanya  ", artist: "Nadhif Basalamah", file: "bergema_sampai_selamanya_-_Nadhif_Basalamah_-_APLMate.com" },
     { title: "Kota Ini Tak Sama Tanpamu  ", artist: "Nadhif Basalamah", file: "kota_ini_tak_sama_tanpamu_-_Nadhif_Basalamah_-_APLMate.com" }
   ];
