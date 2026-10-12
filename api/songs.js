@@ -306,7 +306,7 @@ module.exports = async (req, res) => {
     { title: "Sampai Menutup Mata", artist: "Acha Septriasa / Vanz", file: "Sampai_Menutup_Mata" },
     { title: "Sandiwara Cinta", artist: "Nike Ardilla", file: "Sandiwara_Cinta_-_Nike_Ardilla_-_APLMate.com" },
     { title: "Seberkas Sinar", artist: "Nike Ardilla", file: "Seberkas_Sinar_-_Nike_Ardilla_-_APLMate.com" },
-    { title: "Sesi Potret", artist: "eńau & Ari Lesmana", file: "Sesi_Potret_-_e%C5%84au_Ari_Lesmana_-_APLMate.com" },
+    { title: "Sesi Potret ", artist: "eńau & Ari Lesmana", file: "Sesi_Potret_-_e%C5%84au_Ari_Lesmana_-_APLMate.com" },
     { title: "Siapkah Kau Tuk Jatuh Cinta Lagi", artist: "HIVI!", file: "Siapkah_Kau_Tuk_Jatuh_Cinta_Lagi_-_HIVI_-_APLMate.com" },
     { title: "Siapkah Kau Tuk Jatuh Cinta Lagi (Copy)", artist: "HIVI!", file: "Siapkah_Kau_Tuk_Jatuh_Cinta_Lagi_-_HIVI_-_APLMate.com_-_Copy" },
     { title: "Tanpa Cinta", artist: "Yovie Widianto & Tiara Andini", file: "Tanpa_Cinta_-_Yovie_Widianto_Tiara_Andini_-_APLMate.com" },
