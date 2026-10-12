@@ -327,7 +327,7 @@ module.exports = async (req, res) => {
     { title: "Bimbang (Remastered 2024)", artist: "Melly Goeslaw", file: "Bimbang_Remastered_2024_-_Melly_Goeslaw_-_APLMate.com" },
     { title: "Bimbang (Remastered 2024 Copy)", artist: "Melly Goeslaw", file: "Bimbang_Remastered_2024_-_Melly_Goeslaw_-_APLMate.com_-_Copy" },
     { title: "Bintang Kehidupan", artist: "Nike Ardilla", file: "Bintang_Kehidupan_-_Nike_Ardilla_-_APLMate.com" },
-    { title: "Bunga Maaf (Original)", artist: "The Lantis", file: "Bunga_Maaf_-_The_Lantis_-_APLMate.com" },
+    { title: "Bunga Maaf  ", artist: "The Lantis", file: "Bunga_Maaf_-_The_Lantis_-_APLMate.com" },
     { title: "Bunga Maaf (Copy)", artist: "The Lantis", file: "Bunga_Maaf_-_The_Lantis_-_APLMate.com_-_Copy" },
     { title: "Cari Jodoh", artist: "Wali", file: "Cari_Jodoh_-_Wali_-_APLMate.com" },
     { title: "Cinta Dan Rahasia", artist: "Yura Yunita ft. Glenn Fredly", file: "Cinta_Dan_Rahasia_feat._Glenn_Fredly_-_Yura_Yunita_-_APLMate.com" },
@@ -336,22 +336,22 @@ module.exports = async (req, res) => {
     { title: "Harga Diriku", artist: "Wali", file: "Harga_Diriku_-_Wali_-_APLMate.com" },
     { title: "JODI (Jomblo Ditinggal Mati)", artist: "Wali", file: "JODI_Jomblo_Ditinggal_Mati_-_Wali_-_APLMate.com" },
     { title: "Kehilangan", artist: "Christina The", file: "Kehilangan_-_Christina_The_-_APLMate.com" },
-    { title: "Kehilangan (Instrumental)", artist: "Heart", file: "Kehilangan_Instrumental_-_Heart_-_APLMate.com" },
+    { title: "Kehilangan   ", artist: "Heart", file: "Kehilangan_Instrumental_-_Heart_-_APLMate.com" },
     { title: "Lelaki Cadangan", artist: "T2", file: "Lelaki_Cadangan_-_T2_-_APLMate.com" },
     { title: "Mantan Terindah", artist: "Yovie Widianto & Raisa", file: "Mantan_Terindah_-_Yovie_Widianto_Raisa_-_APLMate.com" },
     { title: "Masa Lalu", artist: "T2", file: "Masa_Lalu_-_T2_-_APLMate.com" },
     { title: "Masing Masing", artist: "Ernie Zakri & Ade Govinda", file: "Masing_Masing_-_Ernie_Zakri_Ade_Govinda_-_APLMate.com" },
     { title: "Matahariku", artist: "Nike Ardilla", file: "Matahariku_-_Nike_Ardilla_-_APLMate.com" },
-    { title: "Monokrom (Original)", artist: "Tulus", file: "Monokrom_-_Tulus_-_APLMate.com" },
+    { title: "Monokrom  ", artist: "Tulus", file: "Monokrom_-_Tulus_-_APLMate.com" },
     { title: "Sampai Menutup Mata", artist: "Muhammad Revan", file: "Muhammad_Revan_-_Sampai_Menutup_Mata" },
     { title: "My Heart (Duet)", artist: "Acha Septriasa & Irwansyah", file: "My_Heart_-_Acha_Septriasa_Irwansyah_-_APLMate.com" },
     { title: "My Heart (Guitar Version)", artist: "Acha Septriasa & Irwansyah", file: "My_Heart_Guitar_Version_-_Acha_Septriasa_Irwansyah_-_APLMate.com" },
     { title: "Pecinta Wanita", artist: "Irwansyah", file: "Pecinta_Wanita_-_Irwansyah_-_APLMate.com" },
     { title: "Pudar (New Version)", artist: "Rossa", file: "Pudar_New_Version_-_Rossa_-_APLMate.com" },
-    { title: "Sambalado (Original)", artist: "Ayu Ting Ting", file: "Sambalado_-_Ayu_Ting_Ting_-_APLMate.com" },
+    { title: "Sambalado  ", artist: "Ayu Ting Ting", file: "Sambalado_-_Ayu_Ting_Ting_-_APLMate.com" },
     { title: "Sampai Menutup Mata (Cover)", artist: "Raden Rakha", file: "Sampai_Menutup_Mata_-_Raden_Rakha_-_APLMate.com" },
-    { title: "Bergema Sampai Selamanya (Original)", artist: "Nadhif Basalamah", file: "bergema_sampai_selamanya_-_Nadhif_Basalamah_-_APLMate.com" },
-    { title: "Kota Ini Tak Sama Tanpamu (Original)", artist: "Nadhif Basalamah", file: "kota_ini_tak_sama_tanpamu_-_Nadhif_Basalamah_-_APLMate.com" }
+    { title: "Bergema Sampai Selamanya  ", artist: "Nadhif Basalamah", file: "bergema_sampai_selamanya_-_Nadhif_Basalamah_-_APLMate.com" },
+    { title: "Kota Ini Tak Sama Tanpamu  ", artist: "Nadhif Basalamah", file: "kota_ini_tak_sama_tanpamu_-_Nadhif_Basalamah_-_APLMate.com" }
   ];
 
   // Mapping data ke bentuk JSON standar Android App
