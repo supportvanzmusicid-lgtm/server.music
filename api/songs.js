@@ -9,7 +9,7 @@ module.exports = async (req, res) => {
   try {
     const cloudName = 'd8cvicyr';
     
-    // Daftar lagu persis sesuai dengan data yang kamu berikan
+    // Daftar lagu murni sesuai dengan data yang kamu berikan di file music.js
     const rawList = [
       { title: "Get You", artist: "Daniel Caesar ft. Kali Uchis", file: "301._Get_You" },
       { title: "Always", artist: "Daniel Caesar", file: "302._Always" },
@@ -629,7 +629,7 @@ module.exports = async (req, res) => {
       { title: "Ku Ingin Jumpa", artist: "Nike Ardilla", file: "5._Ku_Ingin_Jumpa" },
       { title: "Kembali Padaku", artist: "Nike Ardilla", file: "51._Kembali_Padaku" },
       { title: "Kembalikan", artist: "Nike Ardilla", file: "52._Kembalikan" },
-      { title: "Ku Ingin Bebas", artist: "Nike Ardilla", file: "53._Ku_Ingin_Bebas" },
+      { title: "Ku Ingin Bebas", artist: "Nike Ardilla", file: "53._Ku_In_Bebas" },
       { title: "Yang Mengharapkan", artist: "Nike Ardilla", file: "6._Yang_Mengharapkan" },
       { title: "Tergores Cinta Palsu", artist: "Nike Ardilla", file: "8._Tergores_Cinta_Palsu" },
       { title: "Masih Ada Rasa Cinta", artist: "Nike Ardilla", file: "9._Masih_Ada_Rasa_Cinta" },
