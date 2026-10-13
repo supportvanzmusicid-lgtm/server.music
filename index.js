@@ -1,7 +1,9 @@
+const songs = require('./api/songs.js');
+
 module.exports = (req, res) => {
-  res.status(200).json({
-    status: "online",
-    message: "API Server Music Vanz Siap Digunakan!",
-    endpoint: "/api/songs"
-  });
+    // Header CORS supaya bisa diakses aplikasi Android
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Methods', 'GET');
+    
+    res.status(200).json(songs);
 };
