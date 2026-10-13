@@ -4,12 +4,9 @@ module.exports = (req, res) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Methods', 'GET');
 
-    // Ambil kata kunci dari parameter ?search=...
     const searchQuery = req.query.search;
-
     let result = songs;
 
-    // Jika user mengetik pencarian, filter berdasarkan title atau artist
     if (searchQuery) {
         const query = searchQuery.toLowerCase();
         result = songs.filter(song => 
@@ -18,6 +15,8 @@ module.exports = (req, res) => {
         );
     }
 
-    // Kirim hasil pencarian dalam bentuk JSON
-    res.status(200).json(result);
+    // Bungkus array ke dalam Object biar sesuai dengan ekspektasi Gson
+    res.status(200).json({
+        songs: result
+    });
 };
