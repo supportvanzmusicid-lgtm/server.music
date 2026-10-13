@@ -15,8 +15,6 @@ module.exports = (req, res) => {
         );
     }
 
-    // Bungkus array ke dalam Object biar sesuai dengan ekspektasi Gson
-    res.status(200).json({
-        songs: result
-    });
+    // Kirim Array langsung [ ... ] tanpa dibungkus object {}
+    res.status(200).json(result);
 };
