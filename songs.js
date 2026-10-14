@@ -226,7 +226,7 @@ const songs = [
     "title": "Jangan Cintai Aku Apa Adanya",
     "artist": "Tulus",
     "url": "https://zmuvbxgcvqdhhxprkady.supabase.co/storage/v1/object/public/server/Tulus%20-%20Jangan%20Cintai%20Aku%20Apa%20Adanya%20(SPOTISAVER).mp3"
-  }
+  },
   {
     "id": 1,
     "title": "Hatiku Bagai Disangkar Emas",
