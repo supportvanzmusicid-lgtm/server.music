@@ -1,4 +1,232 @@
 const songs = [
+    {
+    "id": 1,
+    "title": "Cahaya",
+    "artist": "Tulus",
+    "url": "https://zmuvbxgcvqdhhxprkady.supabase.co/storage/v1/object/public/server/Tulus%20-%20Cahaya%20(SPOTISAVER).mp3"
+  },
+  {
+    "id": 2,
+    "title": "Tukar Jiwa",
+    "artist": "Tulus",
+    "url": "https://zmuvbxgcvqdhhxprkady.supabase.co/storage/v1/object/public/server/Tulus%20-%20Tukar%20Jiwa%20(SPOTISAVER).mp3"
+  },
+  {
+    "id": 3,
+    "title": "Satu Kali",
+    "artist": "Tulus",
+    "url": "https://zmuvbxgcvqdhhxprkady.supabase.co/storage/v1/object/public/server/Tulus%20-%20Satu%20Kali%20(SPOTISAVER).mp3"
+  },
+  {
+    "id": 4,
+    "title": "Bunga Tidur",
+    "artist": "Tulus",
+    "url": "https://zmuvbxgcvqdhhxprkady.supabase.co/storage/v1/object/public/server/Tulus%20-%20Bunga%20Tidur%20(SPOTISAVER).mp3"
+  },
+  {
+    "id": 5,
+    "title": "Bumerang",
+    "artist": "Tulus",
+    "url": "https://zmuvbxgcvqdhhxprkady.supabase.co/storage/v1/object/public/server/Tulus%20-%20Bumerang%20(SPOTISAVER).mp3"
+  },
+  {
+    "id": 6,
+    "title": "Baru",
+    "artist": "Tulus",
+    "url": "https://zmuvbxgcvqdhhxprkady.supabase.co/storage/v1/object/public/server/Tulus%20-%20Baru%20(SPOTISAVER).mp3"
+  },
+  {
+    "id": 7,
+    "title": "Tujuh Belas",
+    "artist": "Tulus",
+    "url": "https://zmuvbxgcvqdhhxprkady.supabase.co/storage/v1/object/public/server/Tulus%20-%20Tujuh%20Belas%20(SPOTISAVER).mp3"
+  },
+  {
+    "id": 8,
+    "title": "Pamit",
+    "artist": "Tulus",
+    "url": "https://zmuvbxgcvqdhhxprkady.supabase.co/storage/v1/object/public/server/Tulus%20-%20Pamit%20(SPOTISAVER).mp3"
+  },
+  {
+    "id": 9,
+    "title": "1000 Tahun Lamanya",
+    "artist": "Tulus",
+    "url": "https://zmuvbxgcvqdhhxprkady.supabase.co/storage/v1/object/public/server/Tulus%20-%201000%20Tahun%20Lamanya%20(SPOTISAVER).mp3"
+  },
+  {
+    "id": 10,
+    "title": "Diri",
+    "artist": "Tulus",
+    "url": "https://zmuvbxgcvqdhhxprkady.supabase.co/storage/v1/object/public/server/Tulus%20-%20Diri%20(SPOTISAVER).mp3"
+  },
+  {
+    "id": 11,
+    "title": "Tergila-Gila",
+    "artist": "Tulus",
+    "url": "https://zmuvbxgcvqdhhxprkady.supabase.co/storage/v1/object/public/server/Tulus%20-%20Tergila-Gila%20(SPOTISAVER).mp3"
+  },
+  {
+    "id": 12,
+    "title": "Kelana",
+    "artist": "Tulus",
+    "url": "https://zmuvbxgcvqdhhxprkady.supabase.co/storage/v1/object/public/server/Tulus%20-%20Kelana%20(SPOTISAVER).mp3"
+  },
+  {
+    "id": 13,
+    "title": "Manusia Kuat",
+    "artist": "Tulus",
+    "url": "https://zmuvbxgcvqdhhxprkady.supabase.co/storage/v1/object/public/server/Tulus%20-%20Manusia%20Kuat%20(SPOTISAVER).mp3"
+  },
+  {
+    "id": 14,
+    "title": "Lagu Untuk Matahari",
+    "artist": "Tulus",
+    "url": "https://zmuvbxgcvqdhhxprkady.supabase.co/storage/v1/object/public/server/Tulus%20-%20Lagu%20Untuk%20Matahari%20(SPOTISAVER).mp3"
+  },
+  {
+    "id": 15,
+    "title": "Remedi",
+    "artist": "Tulus",
+    "url": "https://zmuvbxgcvqdhhxprkady.supabase.co/storage/v1/object/public/server/Tulus%20-%20Remedi%20(SPOTISAVER).mp3"
+  },
+  {
+    "id": 16,
+    "title": "Jatuh Cinta",
+    "artist": "Tulus",
+    "url": "https://zmuvbxgcvqdhhxprkady.supabase.co/storage/v1/object/public/server/Tulus%20-%20Jatuh%20Cinta%20(SPOTISAVER).mp3"
+  },
+  {
+    "id": 17,
+    "title": "Teman Hidup",
+    "artist": "Tulus",
+    "url": "https://zmuvbxgcvqdhhxprkady.supabase.co/storage/v1/object/public/server/Tulus%20-%20Teman%20Hidup%20(SPOTISAVER).mp3"
+  },
+  {
+    "id": 18,
+    "title": "Sewindu",
+    "artist": "Tulus",
+    "url": "https://zmuvbxgcvqdhhxprkady.supabase.co/storage/v1/object/public/server/Tulus%20-%20Sewindu%20(SPOTISAVER).mp3"
+  },
+  {
+    "id": 19,
+    "title": "Sepatu",
+    "artist": "Tulus",
+    "url": "https://zmuvbxgcvqdhhxprkady.supabase.co/storage/v1/object/public/server/Tulus%20-%20Sepatu%20(SPOTISAVER).mp3"
+  },
+  {
+    "id": 20,
+    "title": "Gajah",
+    "artist": "Tulus",
+    "url": "https://zmuvbxgcvqdhhxprkady.supabase.co/storage/v1/object/public/server/Tulus%20-%20Gajah%20(SPOTISAVER).mp3"
+  },
+  {
+    "id": 21,
+    "title": "Labirin",
+    "artist": "Tulus",
+    "url": "https://zmuvbxgcvqdhhxprkady.supabase.co/storage/v1/object/public/server/Tulus%20-%20Labirin%20(SPOTISAVER).mp3"
+  },
+  {
+    "id": 22,
+    "title": "Adaptasi",
+    "artist": "Tulus",
+    "url": "https://zmuvbxgcvqdhhxprkady.supabase.co/storage/v1/object/public/server/Tulus%20-%20Adaptasi%20(SPOTISAVER).mp3"
+  },
+  {
+    "id": 23,
+    "title": "Langit Abu-Abu",
+    "artist": "Tulus",
+    "url": "https://zmuvbxgcvqdhhxprkady.supabase.co/storage/v1/object/public/server/Tulus%20-%20Langit%20Abu-Abu%20(SPOTISAVER).mp3"
+  },
+  {
+    "id": 24,
+    "title": "Monokrom",
+    "artist": "Tulus",
+    "url": "https://zmuvbxgcvqdhhxprkady.supabase.co/storage/v1/object/public/server/Tulus%20-%20Monokrom%20(SPOTISAVER).mp3"
+  },
+  {
+    "id": 25,
+    "title": "Hati-Hati di Jalan",
+    "artist": "Tulus",
+    "url": "https://zmuvbxgcvqdhhxprkady.supabase.co/storage/v1/object/public/server/Tulus%20-%20Hati-Hati%20di%20Jalan%20(SPOTISAVER).mp3"
+  },
+  {
+    "id": 26,
+    "title": "Teh Hijau",
+    "artist": "Tulus",
+    "url": "https://zmuvbxgcvqdhhxprkady.supabase.co/storage/v1/object/public/server/Tulus%20-%20Teh%20Hijau%20(SPOTISAVER).mp3"
+  },
+  {
+    "id": 27,
+    "title": "Jatuh Suka",
+    "artist": "Tulus",
+    "url": "https://zmuvbxgcvqdhhxprkady.supabase.co/storage/v1/object/public/server/Tulus%20-%20Jatuh%20Suka%20(SPOTISAVER).mp3"
+  },
+  {
+    "id": 28,
+    "title": "Interaksi",
+    "artist": "Tulus",
+    "url": "https://zmuvbxgcvqdhhxprkady.supabase.co/storage/v1/object/public/server/Tulus%20-%20Interaksi%20(SPOTISAVER).mp3"
+  },
+  {
+    "id": 29,
+    "title": "Kisah Sebentar",
+    "artist": "Tulus",
+    "url": "https://zmuvbxgcvqdhhxprkady.supabase.co/storage/v1/object/public/server/Tulus%20-%20Kisah%20Sebentar%20(SPOTISAVER).mp3"
+  },
+  {
+    "id": 30,
+    "title": "Adu Rayu",
+    "artist": "Yovie Widianto/Tulus/Glenn Fredly",
+    "url": "https://zmuvbxgcvqdhhxprkady.supabase.co/storage/v1/object/public/server/Yovie%20Widianto%2C%20Tulus%2C%20Glenn%20Fredly%20-%20Adu%20Rayu%20(SPOTISAVER).mp3"
+  },
+  {
+    "id": 31,
+    "title": "Tuan Nona Kesepian",
+    "artist": "Tulus",
+    "url": "https://zmuvbxgcvqdhhxprkady.supabase.co/storage/v1/object/public/server/Tulus%20-%20Tuan%20Nona%20Kesepian%20(SPOTISAVER).mp3"
+  },
+  {
+    "id": 32,
+    "title": "Satu Hari Di Bulan Juni",
+    "artist": "Tulus",
+    "url": "https://zmuvbxgcvqdhhxprkady.supabase.co/storage/v1/object/public/server/Tulus%20-%20Satu%20Hari%20Di%20Bulan%20Juni%20(SPOTISAVER).mp3"
+  },
+  {
+    "id": 33,
+    "title": "Lekas",
+    "artist": "Tulus",
+    "url": "https://zmuvbxgcvqdhhxprkady.supabase.co/storage/v1/object/public/server/Tulus%20-%20Lekas%20(SPOTISAVER).mp3"
+  },
+  {
+    "id": 34,
+    "title": "Mahakarya",
+    "artist": "Tulus",
+    "url": "https://zmuvbxgcvqdhhxprkady.supabase.co/storage/v1/object/public/server/Tulus%20-%20Mahakarya%20(SPOTISAVER).mp3"
+  },
+  {
+    "id": 35,
+    "title": "Ruang Sendiri",
+    "artist": "Tulus",
+    "url": "https://zmuvbxgcvqdhhxprkady.supabase.co/storage/v1/object/public/server/Tulus%20-%20Ruang%20Sendiri%20(SPOTISAVER).mp3"
+  },
+  {
+    "id": 36,
+    "title": "Ingkar",
+    "artist": "Tulus",
+    "url": "https://zmuvbxgcvqdhhxprkady.supabase.co/storage/v1/object/public/server/Tulus%20-%20Ingkar%20(SPOTISAVER).mp3"
+  },
+  {
+    "id": 37,
+    "title": "Nala",
+    "artist": "Tulus",
+    "url": "https://zmuvbxgcvqdhhxprkady.supabase.co/storage/v1/object/public/server/Tulus%20-%20Nala%20(SPOTISAVER).mp3"
+  },
+  {
+    "id": 38,
+    "title": "Jangan Cintai Aku Apa Adanya",
+    "artist": "Tulus",
+    "url": "https://zmuvbxgcvqdhhxprkady.supabase.co/storage/v1/object/public/server/Tulus%20-%20Jangan%20Cintai%20Aku%20Apa%20Adanya%20(SPOTISAVER).mp3"
+  }
   {
     "id": 1,
     "title": "Hatiku Bagai Disangkar Emas",
