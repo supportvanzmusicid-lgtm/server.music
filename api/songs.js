@@ -1,9 +1,8 @@
 // api/songs.js
 const { createClient } = require('@supabase/supabase-js');
-// Mengambil data dari file songs.js di luar folder api menggunakan "../"
 const songsData = require("../songs.js"); 
 
-// Inisialisasi Supabase Client menggunakan Environment Variables
+// Inisialisasi Supabase Client
 const supabase = createClient(
     process.env.SUPABASE_URL,
     process.env.SUPABASE_SERVICE_KEY
@@ -14,19 +13,31 @@ module.exports = async (req, res) => {
     res.setHeader('Access-Control-Allow-Methods', 'GET');
 
     try {
-        const BUCKET_NAME = process.env.SUPABASE_BUCKET_NAME;
+        // Menggunakan bucket 'musicdoc' sesuai akun baru kamu
+        const BUCKET_NAME = process.env.SUPABASE_BUCKET_NAME || "musicdoc";
 
         const songsWithUrls = await Promise.all(
             songsData.map(async (song) => {
                 const songUrl = song.url || "";
-                let fileName = songUrl.substring(songUrl.lastIndexOf('/') + 1);
-                fileName = decodeURIComponent(fileName); 
+                
+                // Otomatis mengekstrak path setelah /public/musicdoc/
+                // (Mendukung file di root, folder 'music/', maupun 'tulus/')
+                let filePath = "";
+                const marker = `/public/${BUCKET_NAME}/`;
+                
+                if (songUrl.includes(marker)) {
+                    filePath = songUrl.split(marker)[1];
+                } else {
+                    filePath = songUrl;
+                }
+                
+                filePath = decodeURIComponent(filePath); 
 
                 try {
                     // Generate signed URL dari Supabase Storage yang aktif selama 24 jam (86400 detik)
                     const { data, error } = await supabase.storage
                         .from(BUCKET_NAME)
-                        .createSignedUrl(fileName, 86400);
+                        .createSignedUrl(filePath, 86400);
 
                     if (error) {
                         throw error;
@@ -34,7 +45,7 @@ module.exports = async (req, res) => {
 
                     return {
                         ...song,
-                        url: data.signedUrl // Mengganti URL dengan signed URL dari Supabase
+                        url: data.signedUrl // URL publik diganti dengan signed URL yang aman dan bisa diputar
                     };
                 } catch (songError) {
                     return {
