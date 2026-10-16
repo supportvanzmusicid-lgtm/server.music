@@ -6,35 +6,31 @@ module.exports = async (req, res) => {
     res.setHeader('Access-Control-Allow-Methods', 'GET');
 
     try {
-        // Gunakan raw/main/ agar langsung mengakses file tanpa redirect
-        const BASE_URL = "https://huggingface.co/datasets/musicvalt/musicvalt-api/raw/main/";
-
-        const formatPath = (pathStr) => {
-            if (!pathStr) return "";
-            let path = pathStr;
-            if (path.includes('/public/')) {
-                path = path.split('/public/')[1];
-            }
-            if (path.startsWith('http')) {
-                try {
-                    path = new URL(path).pathname;
-                } catch (e) {}
-            }
-            path = decodeURIComponent(path);
-            return path.replace(/^\/+/, ''); // Hapus slash di depan
-        };
+        // Base URL Hugging Face Dataset Anda
+        const HF_BASE_URL = "https://huggingface.co/datasets/musicvalt/musicvalt-api/resolve/main/";
 
         const songsWithUrls = songsData.map((song) => {
-            const songFilePath = formatPath(song.url || song.filename || song.path);
+            const rawPath = song.url || song.filename || song.path || "";
             
-            // Ambil path cover dari properti cover / coverUrl / image
-            const rawCover = song.cover || song.coverUrl || song.image || "";
-            const coverFilePath = formatPath(rawCover);
+            // Bersihkan path file agar bersih dari URL lama/folder public
+            let cleanPath = rawPath;
+            if (cleanPath.includes('/public/')) {
+                cleanPath = cleanPath.split('/public/')[1];
+            }
+            if (cleanPath.startsWith('http')) {
+                try {
+                    const parsed = new URL(cleanPath);
+                    cleanPath = parsed.pathname.replace(/^\/+/, '');
+                    // Buang domain/prefix lama jika ada
+                    cleanPath = cleanPath.replace(/^(datasets\/)?musicvalt\/musicvalt-api\/(resolve|raw)\/main\//, '');
+                } catch (e) {}
+            }
+            cleanPath = decodeURIComponent(cleanPath).replace(/^\/+/, '');
 
             return {
                 ...song,
-                url: songFilePath ? `${BASE_URL}${songFilePath}` : "",
-                cover: coverFilePath ? `${BASE_URL}${coverFilePath}` : (song.cover || "")
+                // Jika sudah berupa URL lengkap gunakan, jika belum gabungkan dengan Hugging Face
+                url: cleanPath.startsWith('http') ? cleanPath : `${HF_BASE_URL}${cleanPath}`
             };
         });
         
