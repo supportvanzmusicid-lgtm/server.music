@@ -6,34 +6,35 @@ module.exports = async (req, res) => {
     res.setHeader('Access-Control-Allow-Methods', 'GET');
 
     try {
-        const BASE_URL = "https://huggingface.co/datasets/musicvalt/musicvalt-api/resolve/main/";
+        // Gunakan raw/main/ agar langsung mengakses file tanpa redirect
+        const BASE_URL = "https://huggingface.co/datasets/musicvalt/musicvalt-api/raw/main/";
+
+        const formatPath = (pathStr) => {
+            if (!pathStr) return "";
+            let path = pathStr;
+            if (path.includes('/public/')) {
+                path = path.split('/public/')[1];
+            }
+            if (path.startsWith('http')) {
+                try {
+                    path = new URL(path).pathname;
+                } catch (e) {}
+            }
+            path = decodeURIComponent(path);
+            return path.replace(/^\/+/, ''); // Hapus slash di depan
+        };
 
         const songsWithUrls = songsData.map((song) => {
-            const songUrl = song.url || song.filename || song.path || "";
+            const songFilePath = formatPath(song.url || song.filename || song.path);
             
-            // Ekstraksi path atau nama file dari URL lama jika ada
-            let filePath = "";
-            if (songUrl.includes('/public/')) {
-                const parts = songUrl.split('/public/');
-                filePath = parts[parts.length - 1];
-            } else if (songUrl.startsWith('http')) {
-                try {
-                    const parsedUrl = new URL(songUrl);
-                    filePath = parsedUrl.pathname.replace(/^\/+/, '');
-                } catch (e) {
-                    filePath = songUrl;
-                }
-            } else {
-                filePath = songUrl;
-            }
-            
-            filePath = decodeURIComponent(filePath); 
-            // Bersihkan slash di awal jika ada untuk menghindari double slash
-            filePath = filePath.replace(/^\/+/, '');
+            // Ambil path cover dari properti cover / coverUrl / image
+            const rawCover = song.cover || song.coverUrl || song.image || "";
+            const coverFilePath = formatPath(rawCover);
 
             return {
                 ...song,
-                url: `${BASE_URL}${filePath}` // Mengarahkan URL ke Hugging Face Dataset
+                url: songFilePath ? `${BASE_URL}${songFilePath}` : "",
+                cover: coverFilePath ? `${BASE_URL}${coverFilePath}` : (song.cover || "")
             };
         });
         
