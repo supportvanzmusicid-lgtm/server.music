@@ -1,50 +1,44 @@
-const { S3Client, GetObjectCommand } = require("@aws-sdk/client-s3");
-const { getSignedUrl } = require("@aws-sdk/s3-request-presigner");
-const songsData = require("./songs.js"); 
+const { createClient } = require('@supabase/supabase-js');
+// Naik satu folder (../) karena songs.js data ada di luar folder api
+const songsData = require("../songs.js"); 
 
-const s3Client = new S3Client({
-    endpoint: "https://storjshare.io",
-    region: "us-east-1", 
-    credentials: {
-        accessKeyId: process.env.STORJ_ACCESS_KEY_ID,
-        secretAccessKey: process.env.STORJ_SECRET_ACCESS_KEY
-    },
-    forcePathStyle: true 
-});
+// Inisialisasi Supabase Client
+const supabase = createClient(
+    process.env.SUPABASE_URL,
+    process.env.SUPABASE_SERVICE_KEY
+);
 
 module.exports = async (req, res) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Methods', 'GET');
 
     try {
-        const BUCKET_NAME = process.env.STORJ_BUCKET_NAME;
+        const BUCKET_NAME = process.env.SUPABASE_BUCKET_NAME;
 
         const songsWithUrls = await Promise.all(
             songsData.map(async (song) => {
-                const supabaseUrl = song.url || "";
-                let fileName = supabaseUrl.substring(supabaseUrl.lastIndexOf('/') + 1);
+                const songUrl = song.url || "";
+                let fileName = songUrl.substring(songUrl.lastIndexOf('/') + 1);
                 fileName = decodeURIComponent(fileName); 
 
                 try {
-                    const command = new GetObjectCommand({
-                        Bucket: BUCKET_NAME,
-                        Key: fileName,
-                        // ✨ KUNCI UTAMA: Memaksa browser untuk memutar langsung (inline), bukan mengunduh (attachment)
-                        ResponseContentDisposition: 'inline',
-                        ResponseContentType: 'audio/mpeg' // Memastikan browser tahu ini file audio MP3
-                    });
+                    // Generate signed URL dari Supabase Storage (aktif selama 24 jam / 86400 detik)
+                    const { data, error } = await supabase.storage
+                        .from(BUCKET_NAME)
+                        .createSignedUrl(fileName, 86400);
 
-                    // Generate link Storj baru yang aktif selama 24 jam
-                    const newStorjUrl = await getSignedUrl(s3Client, command, { expiresIn: 86400 });
+                    if (error) {
+                        throw error;
+                    }
 
                     return {
                         ...song,
-                        url: newStorjUrl 
+                        url: data.signedUrl // Mengganti URL dengan signed URL dari Supabase
                     };
                 } catch (songError) {
                     return {
                         ...song,
-                        error: "File tidak ditemukan di Storj",
+                        error: "File tidak ditemukan di Supabase Storage",
                         details: songError.message
                     };
                 }
@@ -54,7 +48,7 @@ module.exports = async (req, res) => {
         res.status(200).json(songsWithUrls);
     } catch (error) {
         res.status(500).json({
-            error: "Gagal memproses lagu",
+            error: "Gagal memproses daftar lagu",
             details: error.message
         });
     }
