@@ -1,59 +1,41 @@
 // api/songs.js
-const { createClient } = require('@supabase/supabase-js');
 const songsData = require("../songs.js"); 
-
-// Inisialisasi Supabase Client
-const supabase = createClient(
-    process.env.SUPABASE_URL,
-    process.env.SUPABASE_SERVICE_KEY
-);
 
 module.exports = async (req, res) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Methods', 'GET');
 
     try {
-        const BUCKET_NAME = process.env.SUPABASE_BUCKET_NAME || "musicdoc";
+        const BASE_URL = "https://huggingface.co/datasets/musicvalt/musicvalt-api/resolve/main/";
 
-        const songsWithUrls = await Promise.all(
-            songsData.map(async (song) => {
-                const songUrl = song.url || "";
-                
-                // Ekstraksi path otomatis di dalam bucket 'musicdoc'
-                let filePath = "";
-                const marker = `/public/${BUCKET_NAME}/`;
-                
-                if (songUrl.includes(marker)) {
-                    filePath = songUrl.split(marker)[1];
-                } else {
+        const songsWithUrls = songsData.map((song) => {
+            const songUrl = song.url || song.filename || song.path || "";
+            
+            // Ekstraksi path atau nama file dari URL lama jika ada
+            let filePath = "";
+            if (songUrl.includes('/public/')) {
+                const parts = songUrl.split('/public/');
+                filePath = parts[parts.length - 1];
+            } else if (songUrl.startsWith('http')) {
+                try {
+                    const parsedUrl = new URL(songUrl);
+                    filePath = parsedUrl.pathname.replace(/^\/+/, '');
+                } catch (e) {
                     filePath = songUrl;
                 }
-                
-                filePath = decodeURIComponent(filePath); 
+            } else {
+                filePath = songUrl;
+            }
+            
+            filePath = decodeURIComponent(filePath); 
+            // Bersihkan slash di awal jika ada untuk menghindari double slash
+            filePath = filePath.replace(/^\/+/, '');
 
-                try {
-                    // Generate signed URL dari Supabase Storage yang aktif selama 24 jam (86400 detik)
-                    const { data, error } = await supabase.storage
-                        .from(BUCKET_NAME)
-                        .createSignedUrl(filePath, 86400);
-
-                    if (error) {
-                        throw error;
-                    }
-
-                    return {
-                        ...song,
-                        url: data.signedUrl // URL publik diganti dengan signed URL yang bisa diputar
-                    };
-                } catch (songError) {
-                    return {
-                        ...song,
-                        error: "File tidak ditemukan di Supabase Storage",
-                        details: songError.message
-                    };
-                }
-            })
-        );
+            return {
+                ...song,
+                url: `${BASE_URL}${filePath}` // Mengarahkan URL ke Hugging Face Dataset
+            };
+        });
         
         res.status(200).json(songsWithUrls);
     } catch (error) {
