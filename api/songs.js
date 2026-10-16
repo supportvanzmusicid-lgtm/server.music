@@ -1,8 +1,9 @@
+// api/songs.js
 const { createClient } = require('@supabase/supabase-js');
-// Naik satu folder (../) karena songs.js data ada di luar folder api
+// Mengambil data dari file songs.js di luar folder api menggunakan "../"
 const songsData = require("../songs.js"); 
 
-// Inisialisasi Supabase Client
+// Inisialisasi Supabase Client menggunakan Environment Variables
 const supabase = createClient(
     process.env.SUPABASE_URL,
     process.env.SUPABASE_SERVICE_KEY
@@ -22,7 +23,7 @@ module.exports = async (req, res) => {
                 fileName = decodeURIComponent(fileName); 
 
                 try {
-                    // Generate signed URL dari Supabase Storage (aktif selama 24 jam / 86400 detik)
+                    // Generate signed URL dari Supabase Storage yang aktif selama 24 jam (86400 detik)
                     const { data, error } = await supabase.storage
                         .from(BUCKET_NAME)
                         .createSignedUrl(fileName, 86400);
