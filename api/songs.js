@@ -13,15 +13,13 @@ module.exports = async (req, res) => {
     res.setHeader('Access-Control-Allow-Methods', 'GET');
 
     try {
-        // Menggunakan bucket 'musicdoc' sesuai akun baru kamu
         const BUCKET_NAME = process.env.SUPABASE_BUCKET_NAME || "musicdoc";
 
         const songsWithUrls = await Promise.all(
             songsData.map(async (song) => {
                 const songUrl = song.url || "";
                 
-                // Otomatis mengekstrak path setelah /public/musicdoc/
-                // (Mendukung file di root, folder 'music/', maupun 'tulus/')
+                // Ekstraksi path otomatis di dalam bucket 'musicdoc'
                 let filePath = "";
                 const marker = `/public/${BUCKET_NAME}/`;
                 
@@ -45,7 +43,7 @@ module.exports = async (req, res) => {
 
                     return {
                         ...song,
-                        url: data.signedUrl // URL publik diganti dengan signed URL yang aman dan bisa diputar
+                        url: data.signedUrl // URL publik diganti dengan signed URL yang bisa diputar
                     };
                 } catch (songError) {
                     return {
