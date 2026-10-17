@@ -3,7 +3,7 @@ const songs = [
     "id": 1,
     "title": "Always",
     "artist": "Daniel Caesar",
-    "url": "/1.%20Always.mp3"
+    "url": "https://flashers-coming-expired-folder.trycloudflare.com//1.%20Always.mp3"
   },
   {
     "id": 2,
