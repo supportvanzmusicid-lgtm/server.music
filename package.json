@@ -1,9 +1,9 @@
 {
   "name": "vanzvalt-api-vercel",
   "version": "1.0.0",
-  "main": "server.js",
+  "main": "api/songs.js",
   "scripts": {
-    "start": "node server.js"
+    "start": "node api/songs.js"
   },
   "dependencies": {
     "cors": "^2.8.5",
