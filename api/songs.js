@@ -1,28 +1,55 @@
 const express = require('express');
-const axios = require('axios');
+const cors = require('cors');
+
 const app = express();
 
-// Masukkan link Cloudflare Tunnel aktif Anda di sini
-const CLOUDFLARE_TUNNEL_URL = "https://flashers-coming-expired-folder.trycloudflare.com";
+// Mengizinkan aplikasi frontend (jika ada) untuk menembak API ini
+app.use(cors());
+app.use(express.json());
 
-// Endpoint untuk mendapatkan daftar lagu dari server lokal Anda
-app.get('/api/songs', async (req, res) => {
-    try {
-        // Menembak link Cloudflare untuk mengambil data songs.TXT atau file lainnya
-        const response = await axios.get(`${CLOUDFLARE_TUNNEL_URL}/songs.TXT`);
-        res.send(response.data);
-    } catch (error) {
-        res.status(502).json({ error: "Gagal mengambil data dari Cloudflare Tunnel" });
+// Mengambil URL Cloudflare Tunnel dari Environment Variable Vercel
+const CLOUDFLARE_TUNNEL_URL = process.env.TUNNEL_URL;
+
+// 1. Endpoint Utama: Tes apakah server Vercel aktif
+app.get('/', (req, res) => {
+    res.json({
+        status: "Server Vercel Aktif!",
+        tunnel_terhubung: CLOUDFLARE_TUNNEL_URL ? "Ya" : "Tidak (Variabel TUNNEL_URL belum diisi)"
+    });
+});
+
+// 2. Endpoint untuk mengambil daftar text lagu (songs.TXT)
+app.get('/api/songs-list', (req, res) => {
+    if (!CLOUDFLARE_TUNNEL_URL) {
+        return res.status(500).json({ error: "Konfigurasi TUNNEL_URL di Vercel belum di-set!" });
     }
-});
-
-// Endpoint untuk memutar/streaming salah satu lagu .mp3
-app.get('/api/play', (req, res) => {
-    const namaLagu = "1. Serana.mp3"; // Contoh nama file lagu Anda
-    const urlLagu = `${CLOUDFLARE_TUNNEL_URL}/${encodeURIComponent(namaLagu)}`;
     
-    // Mengarahkan (redirect) user langsung ke file mp3 di laptop Anda
-    res.redirect(urlLagu);
+    // Redirect langsung ke file songs.TXT di komputer lokal Anda via Cloudflare
+    res.redirect(`${CLOUDFLARE_TUNNEL_URL}/songs.TXT`);
 });
 
-app.listen(8080, () => console.log('Server GitHub/Hosting jalan di port 8080'));
+// 3. Endpoint untuk memutar/streaming lagu MP3 tertentu secara dinamis
+// Contoh penggunaan: https://vercel.app. Serana.mp3
+app.get('/api/play', (req, res) => {
+    if (!CLOUDFLARE_TUNNEL_URL) {
+        return res.status(500).json({ error: "Konfigurasi TUNNEL_URL di Vercel belum di-set!" });
+    }
+
+    const fileName = req.query.filename;
+
+    if (!fileName) {
+        return res.status(400).json({ error: "Parameter 'filename' wajib diisi! Contoh: /api/play?filename=1. Serana.mp3" });
+    }
+
+    // Melakukan encode pada nama file agar karakter spasi aman dibaca URL
+    const fileUrl = `${CLOUDFLARE_TUNNEL_URL}/${encodeURIComponent(fileName)}`;
+
+    // Mengalihkan traffic browser langsung mendownload/mendengar dari laptop Anda
+    res.redirect(fileUrl);
+});
+
+// Menyesuaikan port otomatis untuk kebutuhan environment Vercel
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
+});
